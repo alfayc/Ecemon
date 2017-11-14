@@ -2,6 +2,8 @@
 #ifndef MODELESPECIAL_H
 #define MODELESPECIAL_H
 
+#include "defines.h"
+
 
 class ModeleSpecial
 {

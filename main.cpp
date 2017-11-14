@@ -1,12 +1,19 @@
 #include <iostream>
+#include "defines.h"
+#include "Creature.h"
+#include "Energie.h"
+#include "Special.h"
 
 using namespace std;
 
 //initialisation de allegro
-void init_alleg(int sizex, int sizey)
+void init_alleg(int sizex, int sizey);
 
 int main()
 {
+
+    init_alleg(XSCREEN, YSCREEN);
+
 
     return 0;
 }

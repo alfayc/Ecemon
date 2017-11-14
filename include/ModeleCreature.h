@@ -2,6 +2,8 @@
 #ifndef MODELECREATURE_H
 #define MODELECREATURE_H
 
+#include "defines.h"
+
 
 class ModeleCreature
 {

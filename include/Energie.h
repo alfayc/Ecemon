@@ -3,6 +3,11 @@
 #define ENERGIE_H
 
 
+#include "defines.h"
+#include "Carte.h"
+#include "ModeleEnergie.h"
+
+
 class Energie : public Carte
 {
     public:

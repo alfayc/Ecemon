@@ -11,7 +11,7 @@ ModeleSpecial::~ModeleSpecial()
     //dtor
 }
 
-void ModelSpecial::Action()
+void ModeleSpecial::Action()
 {
 
 }

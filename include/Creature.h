@@ -1,9 +1,9 @@
-//Don't forget to include what's necessary
 #ifndef CREATURE_H
 #define CREATURE_H
 
-#include <Carte.h>
-
+#include "defines.h"
+#include "Carte.h"
+#include "ModeleCreature.h"
 
 class Creature : public Carte
 {
@@ -18,3 +18,4 @@ class Creature : public Carte
 };
 
 #endif // CREATURE_H
+

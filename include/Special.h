@@ -2,7 +2,10 @@
 #ifndef SPECIAL_H
 #define SPECIAL_H
 
-#include <Carte.h>
+#include "defines.h"
+#include "Carte.h"
+#include "ModeleSpecial.h"
+
 
 
 class Special : public Carte
