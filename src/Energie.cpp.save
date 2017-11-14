@@ -1,0 +1,12 @@
+//Don't forget to include what's necessary
+#include "Energie.h"
+
+Energie::Energie(ModeleEnergie& m_Modele)
+{
+    //ctor
+}
+
+Energie::~Energie()
+{
+    //dtor
+}
