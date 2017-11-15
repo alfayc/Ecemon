@@ -15,6 +15,8 @@ class Creature : public Carte
 
     private:
         ModeleCreature& m_Modele;
+        int m_HP;
+        int m_AD;
 };
 
 #endif // CREATURE_H

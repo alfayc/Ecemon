@@ -1,8 +1,5 @@
-#include <iostream>
 #include "defines.h"
-#include "Creature.h"
-#include "Energie.h"
-#include "Special.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -11,8 +8,8 @@ void init_alleg(int sizex, int sizey);
 
 int main()
 {
-
     init_alleg(XSCREEN, YSCREEN);
+
 
 
     return 0;

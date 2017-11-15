@@ -4,7 +4,8 @@
 Creature::Creature(ModeleCreature& _Modele)
     :m_Modele(_Modele)
 {
-    //ctor
+    m_HP = _Modele.GetHP();
+    m_AD = _Modele.GetAD();
 }
 
 Creature::~Creature()

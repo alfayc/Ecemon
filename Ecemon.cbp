@@ -12,7 +12,9 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +24,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -32,7 +35,27 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Linker>
+			<Add library="alleg" />
+		</Linker>
+		<Unit filename="include/Carte.h" />
+		<Unit filename="include/Creature.h" />
+		<Unit filename="include/Energie.h" />
+		<Unit filename="include/ModeleCreature.h" />
+		<Unit filename="include/ModeleEnergie.h" />
+		<Unit filename="include/ModeleSpecial.h" />
+		<Unit filename="include/Player.h" />
+		<Unit filename="include/Special.h" />
+		<Unit filename="include/defines.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Carte.cpp" />
+		<Unit filename="src/Creature.cpp" />
+		<Unit filename="src/Energie.cpp" />
+		<Unit filename="src/ModeleCreature.cpp" />
+		<Unit filename="src/ModeleEnergie.cpp" />
+		<Unit filename="src/ModeleSpecial.cpp" />
+		<Unit filename="src/Player.cpp" />
+		<Unit filename="src/Special.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
