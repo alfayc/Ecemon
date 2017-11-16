@@ -10,24 +10,18 @@ int main()
 {
     init_alleg(XSCREEN, YSCREEN); //doit être avant d'utiliser des fonctions d'alleg (create_bitmap par exemple)
 
-    BITMAP *buffer, *playerView, *souris;
+    BITMAP *buffer, *playerView;
     Player player1, player2;
 
     buffer = create_bitmap(XSCREEN, YSCREEN);
     playerView = create_bitmap(XSCREEN, YSCREEN/2);
-    souris = load_bitmap("Res/mario_mouse_cursor.bmp", NULL);ERR_CHARG(souris)
 
     while (!key[KEY_ESC])
     {
         player1.Draw(playerView, true);
         blit(playerView, buffer, 0, 0, 0, YSCREEN/2, XSCREEN, YSCREEN/2);
-        player2.Draw(playerView, false);
+        player2.Draw(player1, false);
         blit(playerView, buffer, 0, 0, 0, 0, XSCREEN, YSCREEN/2);
-
-        draw_sprite(buffer, souris, mouse_x, mouse_y);
-        cout << mouse_x << " " << mouse_y << endl;
-
-        blit(buffer, screen, 0, 0, 0, 0, XSCREEN, YSCREEN);
 
         rest(20);
     }

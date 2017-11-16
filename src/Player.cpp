@@ -34,6 +34,7 @@ Player::~Player()
 void Player::Draw(BITMAP *dest, bool turn)
 {
     BITMAP *rep = create_bitmap(dest->w, dest->h);
+    rectfill(rep, 0, 0, dest->w, dest->h, BLANC);
 
     rect(rep, XENERGY, YENERGY, XENERGY+CARDWIDTH, YENERGY+CARDHEIGHT, NOIR);
     if (!m_Energie.empty())
@@ -83,6 +84,8 @@ void Player::Draw(BITMAP *dest, bool turn)
     {
         rotate_sprite(dest, rep, 0, 0, 128); //rotation complète
     }
+
+    destroy_bitmap(rep);
 }
 
 void Player::EndTurn()

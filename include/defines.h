@@ -25,11 +25,11 @@
 #define XSPECIAL 420
 #define YSPECIAL MARGIN
 #define XENJEU MARGIN
-#define YENJEU 85
+#define YENJEU 95
 #define XPIOCHE 215
-#define YPIOCHE 85
+#define YPIOCHE 95
 #define XCIMETIERE 420
-#define YCIMETIERE 85
+#define YCIMETIERE 95
 #define XMAIN 70
 #define YMAIN 180
 
@@ -52,7 +52,7 @@
 #define VERT makecol(0,255,0)
 #define MAG makecol (255,0,255)         //magenta
 
-/* ces couleurs sont celles qu'on utilisait dans le projet ECEcraft. si ça plait on peut les réutiliser */
+/** ces couleurs sont celles qu'on utilisait dans le projet ECEcraft. Quand besoin on peut les réutiliser */
 //#define COL_UI_FOND makecol(1,87,155)
 //#define COL_UI_ACC makecol(79,195,247)
 #define COL_SAND makecol(194,132,80)
@@ -67,6 +67,9 @@
 //#define COL_ENEMY ROUGE
 //#define COL_PEASANT makecol(34,93,255)
 //#define COL_SOLDIER BLEU
+
+/* renvoie une erreur de chargement */
+#define ERR_CHARG(x) {if(!x){allegro_message("probleme de chargement");exit(1);}}
 
 #endif //DEFINES_H_INCLUDED
 

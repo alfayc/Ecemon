@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1510779150 source:/home/leonardo/Documents/Programmes/C++/Ecemon/main.cpp
+1510841783 source:/home/leonardo/Documents/Programmes/C++/Ecemon/main.cpp
 	"defines.h"
 	"Player.h"
 
@@ -7,7 +7,7 @@
 	<string>
 	<allegro.h>
 
-1510783151 /home/leonardo/Documents/Programmes/C++/Ecemon/include/defines.h
+1510841928 /home/leonardo/Documents/Programmes/C++/Ecemon/include/defines.h
 	<string>
 	<allegro.h>
 	<iostream>
@@ -73,6 +73,6 @@
 	"Energie.h"
 	"Special.h"
 
-1510773754 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Player.cpp
+1510839729 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Player.cpp
 	"Player.h"
 
