@@ -1,3 +1,10 @@
 *.save
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
 bin/
 obj/
