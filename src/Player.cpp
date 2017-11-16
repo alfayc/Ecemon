@@ -31,6 +31,26 @@ Player::~Player()
     //dtor
 }
 
+void Player::EndTurn()
+{
+
+}
+
+void Player::StartTurn()
+{
+    if (m_Main.size()<MAXHAND && !m_Deck.empty())
+    {
+        m_Main.push_back(m_Deck.front()); //on met la carte en haut de la pioche dans la main
+        m_Deck.pop(); //on enlève la carte d'en haut de la pioche
+    }
+}
+
+//contient la boucle evennementielle
+void Player::Turn()
+{
+
+}
+
 void Player::Draw(BITMAP *dest, bool turn)
 {
     BITMAP *rep = create_bitmap(dest->w, dest->h);
@@ -54,17 +74,17 @@ void Player::Draw(BITMAP *dest, bool turn)
             rectfill(rep, i*(CARDWIDTH+MARGIN) + XSPECIAL, YSPECIAL, i*(CARDWIDTH+MARGIN) + XSPECIAL+CARDWIDTH, YSPECIAL+CARDHEIGHT, BLEU);
     }
 
-    rect(rep, (CARDWIDTH+MARGIN) + XENJEU, YENJEU, (CARDWIDTH+MARGIN) + XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
+    rect(rep, XENJEU, YENJEU, XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
     if (m_Enjeu)
-        rectfill(rep, (CARDWIDTH+MARGIN) + XENJEU, YENJEU, (CARDWIDTH+MARGIN) + XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
+        rectfill(rep, XENJEU, YENJEU, XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
 
-    rect(rep, (CARDWIDTH+MARGIN) + XPIOCHE, YPIOCHE, (CARDWIDTH+MARGIN) + XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
+    rect(rep, XPIOCHE, YPIOCHE, XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
     if (!m_Deck.empty())
-        rectfill(rep, (CARDWIDTH+MARGIN) + XPIOCHE, YPIOCHE, (CARDWIDTH+MARGIN) + XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
+        rectfill(rep, XPIOCHE, YPIOCHE, XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
 
-    rect(rep, (CARDWIDTH+MARGIN) + XCIMETIERE, YCIMETIERE, (CARDWIDTH+MARGIN) + XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);
+    rect(rep, XCIMETIERE, YCIMETIERE, XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);
     if (!m_Cimetiere.empty())
-        rectfill(rep, (CARDWIDTH+MARGIN) + XCIMETIERE, YCIMETIERE, (CARDWIDTH+MARGIN) + XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);
+        rectfill(rep, XCIMETIERE, YCIMETIERE, XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);
 
 
     if (turn)
@@ -88,12 +108,4 @@ void Player::Draw(BITMAP *dest, bool turn)
     destroy_bitmap(rep);
 }
 
-void Player::EndTurn()
-{
 
-}
-
-void Player::Turn()
-{
-
-}

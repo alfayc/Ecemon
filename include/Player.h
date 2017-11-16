@@ -31,6 +31,7 @@ class Player
         //turn est vraie si c'est au tour de ce joueur
         void Draw(BITMAP *dest, bool turn); //affiche les cartes sur la bitmap en paramètre
         void EndTurn();
+        void StartTurn();
         void Turn();
 
 

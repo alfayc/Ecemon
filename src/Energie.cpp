@@ -4,10 +4,11 @@
 Energie::Energie(ModeleEnergie& _Modele)
     :m_Modele(_Modele)
 {
-    //ctor
+    m_CardType = ENERGIE;
 }
 
 Energie::~Energie()
 {
     //dtor
 }
+

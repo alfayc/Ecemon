@@ -4,7 +4,7 @@
 Special::Special(ModeleSpecial& _Modele)
     :m_Modele(_Modele)
 {
-    //ctor
+    m_CardType = SPECIAL;
 }
 
 Special::~Special()

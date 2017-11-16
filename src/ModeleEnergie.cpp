@@ -9,3 +9,4 @@ ModeleEnergie::~ModeleEnergie()
 {
     //dtor
 }
+

@@ -5,13 +5,17 @@
 
 class Carte
 {
+    private:
+
+    protected:
+        int m_CardType; //le type de carte (energie, creature ou special)
+
     public:
         Carte();
         virtual ~Carte();
 
-    protected:
-
-    private:
+        int GetCardType() { return m_CardType; }
 };
 
 #endif // CARTE_H
+

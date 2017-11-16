@@ -25,7 +25,7 @@ class ModeleEnergie
         int m_Energy;
         int m_Domaine;
         std::string m_Description;
-        const int m_Type = 0;
 };
 
 #endif // MODELEENERGIE_H
+

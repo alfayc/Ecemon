@@ -27,7 +27,7 @@ class ModeleCreature
         std::string m_Description;
         int m_HP;
         int m_AD;
-        const int m_Type = 1;
 };
 
 #endif // MODELECREATURE_H
+

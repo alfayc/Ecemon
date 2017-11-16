@@ -23,7 +23,7 @@ class ModeleSpecial
     private:
         std::string m_Nom;
         std::string m_Description;
-        const int m_Type = 1;
 };
 
 #endif // MODELESPECIAL_H
+

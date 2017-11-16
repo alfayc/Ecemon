@@ -1,6 +1,7 @@
 #ifndef DEFINES_H_INCLUDED
 #define DEFINES_H_INCLUDED
 
+///LINKERS/INCLUDES
 #include <string>
 #include <allegro.h>
 #include <iostream>
@@ -13,6 +14,22 @@
 #include "ModeleEnergie.h"
 #include "ModeleSpecial.h"
 
+///MAGIC NUMBERS AND ENUMS
+/* le nombre max de cartes dans les differents endroits du plateau */
+#define MAXHAND 5
+#define MAXACTIVE 5
+#define MAXSPECIAL 1
+
+#define NBDOMAINE 4
+
+#define ENERGIE 1
+#define CREATURE 2
+#define SPECIAL 3
+
+///GRAPHICS DIMENTIONS AND COORDINATES
+#define XSCREEN 600
+#define YSCREEN 800
+
 /* les dimensions */
 #define CARDWIDTH 50
 #define CARDHEIGHT 75
@@ -22,28 +39,18 @@
 #define YENERGY MARGIN
 #define XACTIVE 70
 #define YACTIVE MARGIN
-#define XSPECIAL 420
+#define XSPECIAL 370
 #define YSPECIAL MARGIN
 #define XENJEU MARGIN
 #define YENJEU 95
-#define XPIOCHE 215
+#define XPIOCHE 190
 #define YPIOCHE 95
-#define XCIMETIERE 420
+#define XCIMETIERE 370
 #define YCIMETIERE 95
 #define XMAIN 70
 #define YMAIN 180
 
-
-#define XSCREEN 600
-#define YSCREEN 800
-
-/* le nombre max de cartes dans les differents endroits du plateau */
-#define MAXHAND 5
-#define MAXACTIVE 5
-#define MAXSPECIAL 1
-
-#define NBDOMAINE 4
-
+///COLORS
 /* des couleurs */
 #define BLANC makecol(255,255,255)
 #define NOIR makecol(0,0,0)
