@@ -7,16 +7,16 @@
 
 class Creature : public Carte
 {
-    public:
-        Creature(ModeleCreature& _Modele);
-        virtual ~Creature();
-
-    protected:
-
     private:
         ModeleCreature& m_Modele;
         int m_HP;
         int m_AD;
+
+    protected:
+
+    public:
+        Creature(ModeleCreature& _Modele);
+        virtual ~Creature();
 };
 
 #endif // CREATURE_H

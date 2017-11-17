@@ -1,4 +1,3 @@
-//Don't forget to include what's necessary
 #ifndef MODELESPECIAL_H
 #define MODELESPECIAL_H
 
@@ -7,6 +6,12 @@
 
 class ModeleSpecial
 {
+    private:
+        std::string m_Nom;
+        std::string m_Description;
+
+    protected:
+
     public:
         ModeleSpecial();
         virtual ~ModeleSpecial();
@@ -17,12 +22,6 @@ class ModeleSpecial
         void SetDescription(std::string val) { m_Description = val; }
 
         void Action();
-
-    protected:
-
-    private:
-        std::string m_Nom;
-        std::string m_Description;
 };
 
 #endif // MODELESPECIAL_H

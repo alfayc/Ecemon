@@ -1,4 +1,3 @@
-//Don't forget to include what's necessary
 #ifndef MODELECREATURE_H
 #define MODELECREATURE_H
 
@@ -7,8 +6,17 @@
 
 class ModeleCreature
 {
+    private:
+        int m_AD;
+        int m_HP;
+        std::string m_Nom;
+        std::string m_Description;
+
+    protected:
+
     public:
         ModeleCreature();
+        ModeleCreature(int a);
         virtual ~ModeleCreature();
 
         std::string GetNom() { return m_Nom; }
@@ -19,14 +27,6 @@ class ModeleCreature
         void SetHP(int val) { m_HP = val; }
         int GetAD() { return m_AD; }
         void SetAD(int val) { m_AD = val; }
-
-    protected:
-
-    private:
-        std::string m_Nom;
-        std::string m_Description;
-        int m_HP;
-        int m_AD;
 };
 
 #endif // MODELECREATURE_H

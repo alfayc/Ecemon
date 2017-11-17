@@ -5,6 +5,14 @@
 
 class ModeleEnergie
 {
+    private:
+        std::string m_Nom;
+        int m_Energy;
+        int m_Domaine;
+        std::string m_Description;
+
+    protected:
+
     public:
         ModeleEnergie();
         virtual ~ModeleEnergie();
@@ -17,14 +25,6 @@ class ModeleEnergie
         void SetDomaine(int val) { m_Domaine = val; }
         std::string GetDescription() { return m_Description; }
         void SetDescription(std::string val) { m_Description = val; }
-
-    protected:
-
-    private:
-        std::string m_Nom;
-        int m_Energy;
-        int m_Domaine;
-        std::string m_Description;
 };
 
 #endif // MODELEENERGIE_H

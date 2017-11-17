@@ -17,6 +17,14 @@ Player::Player()
     }
 
 
+    m_Deck.push(new Creature(*(new ModeleCreature(0))));
+    m_Deck.push(new Creature(*(new ModeleCreature(0))));
+    m_Deck.push(new Energie(*(new ModeleEnergie)));
+    m_Deck.push(new Creature(*(new ModeleCreature(0))));
+    m_Deck.push(new Special(*(new ModeleSpecial)));
+    m_Deck.push(new Special(*(new ModeleSpecial)));
+    m_Deck.push(new Creature(*(new ModeleCreature(0))));
+    m_Deck.push(new Creature(*(new ModeleCreature(0))));
 
     m_Exclusive = NULL;
 
@@ -45,14 +53,62 @@ void Player::StartTurn()
     }
 }
 
-//contient la boucle evennementielle
-void Player::Turn()
+bool ClickCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
 {
+    //bool rep = false;
 
+    int x = mouse_x - xOffset;
+    int y = mouse_y - yOffset;
+
+    if (x<0 || x>=WPLAYERSIDE || y<0 || y>=HPLAYERSIDE)
+        return false
+}
+
+//contient la boucle evennementielle
+void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites)
+{
+    bool prevMouse = true;
+    bool endTurn = false;
+
+    BITMAP *playerView = create_bitmap(XSCREEN, YSCREEN/2);
+
+    do
+    {
+        this->Draw(playerView, true);
+        blit(playerView, buffer, 0, 0, 0, YSCREEN/2, XSCREEN, YSCREEN/2);
+
+        opponent.Draw(playerView, false);
+        blit(playerView, buffer, 0, 0, 0, 0, XSCREEN, YSCREEN/2);
+
+        draw_sprite(buffer, sprites.buttonEndTurn, XENDTURN, YENDTURN);
+        cout << mouse_x << " " << mouse_y << endl;
+
+        draw_sprite(buffer, sprites.souris, mouse_x, mouse_y);
+        blit(buffer, screen, 0, 0, 0, 0, XSCREEN, YSCREEN);
+
+        if (mouse_b&1)
+        {
+            if (!prevMouse)
+            {
+                if (mouse_x>=XENDTURN && mouse_x<=(XENDTURN+WENDTURN) && mouse_y>=YENDTURN && mouse_y<=(YENDTURN+HENDTURN))
+                endTurn = true;
+            }
+            prevMouse = true;
+        }
+        else
+            prevMouse = false;
+
+        rest(20);
+
+        if (key[KEY_ESC])
+            break;
+
+    }while (!endTurn);
 }
 
 void Player::Draw(BITMAP *dest, bool turn)
 {
+    int col = 0;
     BITMAP *rep = create_bitmap(dest->w, dest->h);
     rectfill(rep, 0, 0, dest->w, dest->h, BLANC);
 
@@ -91,11 +147,24 @@ void Player::Draw(BITMAP *dest, bool turn)
     {
         for (unsigned int i = 0;i<m_Main.size();i++) //m_Main est un vecteur (données contingues en mémoire)
         {
+            switch (m_Main[i]->GetCardType())
+            {
+                case ENERGIE:
+                col = NOIR;
+            break;
+
+                case CREATURE:
+                col = ROUGE;
+            break;
+
+                case SPECIAL:
+                col = BLEU;
+            break;
+            }
+
             rect(rep, i*(CARDWIDTH+MARGIN) + XMAIN, YMAIN, i*(CARDWIDTH+MARGIN) + XMAIN+CARDWIDTH, YMAIN+CARDHEIGHT, COL_MOUNTAIN);
 
-            //généralement inutilepuisque la case du vecteur n'éisterait pas sinon
-            if (m_Main[i])
-                rectfill(rep, i*(CARDWIDTH+MARGIN) + XMAIN, YMAIN, i*(CARDWIDTH+MARGIN) + XMAIN+CARDWIDTH, YMAIN+CARDHEIGHT, COL_MOUNTAIN);
+            rectfill(rep, i*(CARDWIDTH+MARGIN) + XMAIN + 1, YMAIN +1, i*(CARDWIDTH+MARGIN) + XMAIN+CARDWIDTH - 1, YMAIN+CARDHEIGHT - 1, col);
         }
 
         blit(rep, dest, 0, 0, 0, 0, dest->w, dest->h);

@@ -22,13 +22,15 @@
 
 #define NBDOMAINE 4
 
-#define ENERGIE 1
-#define CREATURE 2
-#define SPECIAL 3
+#define ENERGIE 0
+#define CREATURE 1
+#define SPECIAL 2
 
 ///GRAPHICS DIMENTIONS AND COORDINATES
 #define XSCREEN 600
 #define YSCREEN 800
+#define WPLAYERSIDE XSCREEN
+#define HPLAYERSIDE (YSCREEN/2)
 
 /* les dimensions */
 #define CARDWIDTH 50
@@ -49,6 +51,11 @@
 #define YCIMETIERE 95
 #define XMAIN 70
 #define YMAIN 180
+
+#define XENDTURN (XSCREEN/2 - 25)
+#define YENDTURN 350
+#define WENDTURN 50
+#define HENDTURN 30
 
 ///COLORS
 /* des couleurs */
@@ -75,8 +82,18 @@
 //#define COL_PEASANT makecol(34,93,255)
 //#define COL_SOLDIER BLEU
 
+
+///FILE NAMES
+#define SOURIS "Res/mario_mouse_cursor.bmp" //32x30
+#define ENDTURN "Res/End_Turn_Button.bmp"   //50x30
+
 /* renvoie une erreur de chargement */
 #define ERR_CHARG(x) {if(!x){allegro_message("probleme de chargement");exit(1);}}
+
+typedef struct Sprites{
+    BITMAP *souris;
+    BITMAP *buttonEndTurn;
+}Sprites;
 
 #endif //DEFINES_H_INCLUDED
 

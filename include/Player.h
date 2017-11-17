@@ -15,8 +15,8 @@ class Player
         std::stack<Carte *> m_Cimetiere;    //le cimetière dans la partie
         std::vector<Carte *> m_Main;        //les cartes dans la main du joueur
         Carte *m_Enjeu;                     //l'enjeu
-        Carte *m_Special[MAXSPECIAL];       //la/les spéciales persistantes
-        Carte *m_Active[MAXACTIVE];         //la/les créatures actives
+        Special *m_Special[MAXSPECIAL];     //la/les spéciales persistantes
+        Creature *m_Active[MAXACTIVE];      //la/les créatures actives
         std::stack<Carte*> m_Energie;       //la/les cartes énergies consommées
         Carte *m_Exclusive;                 //la carte exclusive à ce joueur (bowser n'a pas mario etc)
 
@@ -32,7 +32,7 @@ class Player
         void Draw(BITMAP *dest, bool turn); //affiche les cartes sur la bitmap en paramètre
         void EndTurn();
         void StartTurn();
-        void Turn();
+        void Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites); //là où y'a la boucle evennementielle
 
 
         //getters/setters

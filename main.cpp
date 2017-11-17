@@ -10,31 +10,35 @@ using namespace std;
 
 //initialisation de allegro
 void init_alleg(int sizex, int sizey);
+void load_sprites(Sprites& sprites);
 
 int main()
 {
     init_alleg(XSCREEN, YSCREEN); //doit être avant d'utiliser des fonctions d'alleg (create_bitmap par exemple)
 
-    BITMAP *buffer, *playerView, *souris;
-    Player player1, player2;
+    Sprites sprites;
+    Player players[2];
+
+    load_sprites(sprites);
 
     buffer = create_bitmap(XSCREEN, YSCREEN);
     playerView = create_bitmap(XSCREEN, YSCREEN/2);
-    souris = load_bitmap("Res/mario_mouse_cursor.bmp", NULL);ERR_CHARG(souris)
 
     while (!key[KEY_ESC])
     {
-        player1.Draw(playerView, true);
-        blit(playerView, buffer, 0, 0, 0, YSCREEN/2, XSCREEN, YSCREEN/2);
-        player2.Draw(playerView, false);
-        blit(playerView, buffer, 0, 0, 0, 0, XSCREEN, YSCREEN/2);
+        for (int i=0;i<2;i++)
+        {
+            players[i].StartTurn();
+            prevEnter = key[KEY_ENTER];
 
-        draw_sprite(buffer, souris, mouse_x, mouse_y);
-        cout << mouse_x << " " << mouse_y << endl;
+            players[i].Turn(players[!i], buffer, sprites);
 
-        blit(buffer, screen, 0, 0, 0, 0, XSCREEN, YSCREEN);
+            if (key[KEY_ESC])
+                break;
 
-        rest(20);
+            players[i].EndTurn();
+        }
+
     }
 
 
@@ -42,6 +46,12 @@ int main()
     return 0;
 }
 
+
+void load_sprites(Sprites& sprites)
+{
+    sprites.souris = load_bitmap(SOURIS, NULL);ERR_CHARG(sprites.souris)
+    sprites.buttonEndTurn = load_bitmap(ENDTURN, NULL);ERR_CHARG(sprites.buttonEndTurn)
+}
 
 //initialisation de allegro
 void init_alleg(int sizex, int sizey)
