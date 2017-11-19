@@ -22,9 +22,16 @@
 
 #define NBDOMAINE 4
 
-#define ENERGIE 0
-#define CREATURE 1
-#define SPECIAL 2
+
+/* enum pour les endroits sur le plateau */
+#define PENERGY 1
+#define PACTIVE 2
+#define PSPECIAL 3
+#define PENJEU 4
+#define PPIOCHE 5
+#define PCIMETIERE 6
+#define PMAIN 7
+
 
 ///GRAPHICS DIMENTIONS AND COORDINATES
 #define XSCREEN 600
@@ -35,6 +42,7 @@
 /* les dimensions */
 #define CARDWIDTH 50
 #define CARDHEIGHT 75
+#define PDIST (CARDWIDTH + MARGIN)
 
 #define MARGIN 10
 #define XENERGY MARGIN
@@ -90,10 +98,10 @@
 /* renvoie une erreur de chargement */
 #define ERR_CHARG(x) {if(!x){allegro_message("probleme de chargement");exit(1);}}
 
-typedef struct Sprites{
+struct Sprites{
     BITMAP *souris;
     BITMAP *buttonEndTurn;
-}Sprites;
+};
 
 #endif //DEFINES_H_INCLUDED
 

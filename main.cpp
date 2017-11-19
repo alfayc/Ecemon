@@ -2,7 +2,7 @@
 #include "Player.h"
 
 /**
-  *
+  * std::dynamic_cast
   */
 
 
@@ -16,20 +16,19 @@ int main()
 {
     init_alleg(XSCREEN, YSCREEN); //doit être avant d'utiliser des fonctions d'alleg (create_bitmap par exemple)
 
+    BITMAP *buffer;
     Sprites sprites;
     Player players[2];
 
     load_sprites(sprites);
 
     buffer = create_bitmap(XSCREEN, YSCREEN);
-    playerView = create_bitmap(XSCREEN, YSCREEN/2);
 
     while (!key[KEY_ESC])
     {
         for (int i=0;i<2;i++)
         {
             players[i].StartTurn();
-            prevEnter = key[KEY_ENTER];
 
             players[i].Turn(players[!i], buffer, sprites);
 

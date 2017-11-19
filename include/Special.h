@@ -1,4 +1,3 @@
-//Don't forget to include what's necessary
 #ifndef SPECIAL_H
 #define SPECIAL_H
 
@@ -10,15 +9,16 @@
 
 class Special : public Carte
 {
+    private:
+        ModeleSpecial& m_Modele;
+
+    protected:
+
     public:
         Special(ModeleSpecial& _Modele);
         virtual ~Special();
 
-    protected:
-
-    private:
-
-    ModeleSpecial& m_Modele;
+        CardType GetCardType();
 };
 
 #endif // SPECIAL_H

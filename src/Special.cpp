@@ -4,10 +4,15 @@
 Special::Special(ModeleSpecial& _Modele)
     :m_Modele(_Modele)
 {
-    m_CardType = SPECIAL;
 }
 
 Special::~Special()
 {
     //dtor
 }
+
+CardType Special::GetCardType()
+{
+    return SPECIAL;
+}
+

@@ -3,18 +3,25 @@
 
 #include "defines.h"
 
+
+enum CardType{
+    ENERGIE = 0,
+    CREATURE = 1,
+    SPECIAL = 2
+};
+
+
 class Carte
 {
     private:
 
     protected:
-        int m_CardType; //le type de carte (energie, creature ou special)
 
     public:
         Carte();
         virtual ~Carte();
 
-        int GetCardType() { return m_CardType; }
+        virtual CardType GetCardType() = 0;
 };
 
 #endif // CARTE_H

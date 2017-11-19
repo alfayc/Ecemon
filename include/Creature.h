@@ -17,6 +17,8 @@ class Creature : public Carte
     public:
         Creature(ModeleCreature& _Modele);
         virtual ~Creature();
+
+        CardType GetCardType();
 };
 
 #endif // CREATURE_H

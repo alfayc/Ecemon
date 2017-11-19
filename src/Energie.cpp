@@ -4,11 +4,16 @@
 Energie::Energie(ModeleEnergie& _Modele)
     :m_Modele(_Modele)
 {
-    m_CardType = ENERGIE;
 }
 
 Energie::~Energie()
 {
     //dtor
+}
+
+
+CardType Energie::GetCardType()
+{
+    return ENERGIE;
 }
 

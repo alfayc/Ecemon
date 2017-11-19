@@ -55,14 +55,70 @@ void Player::StartTurn()
 
 bool ClickCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
 {
-    //bool rep = false;
-
     int x = mouse_x - xOffset;
     int y = mouse_y - yOffset;
 
     if (x<0 || x>=WPLAYERSIDE || y<0 || y>=HPLAYERSIDE)
-        return false
+        return false;
+
+    //test de chaque case. pourrait être fait avec des modulos + switch mais vu qu'on va peut être pas aligner les cartes...
+    if (x>=XENERGY && x<XENERGY+CARDWIDTH && y>=YENERGY && y<YENERGY+CARDHEIGHT)
+    {
+        choiceType = PENERGY;
+        return true;
+    }
+    else if (x>=XACTIVE && x<(XACTIVE + MAXACTIVE*PDIST) && y>=YACTIVE && y<(YACTIVE+CARDHEIGHT))
+    {
+        if ((x-XACTIVE)%PDIST < CARDWIDTH)
+        {
+            choiceType = PACTIVE;
+            choiceNum = (int)((x-XACTIVE)%PDIST);
+            return true;
+        }
+        else
+            return false;
+    }
+    else if (x>=XSPECIAL && x<(XSPECIAL+MAXSPECIAL*PDIST) && y>=YSPECIAL && y<(YSPECIAL+CARDHEIGHT))
+    {
+        if ((x-XSPECIAL)%PDIST < CARDWIDTH)
+        {
+            choiceType = PACTIVE;
+            choiceNum = (int)((x-XSPECIAL)%PDIST);
+            return true;
+        }
+        else
+            return false;
+    }
+    else if (x>=XENJEU && x<(XENJEU+CARDWIDTH) && y>=YENJEU && y<(YENJEU+CARDHEIGHT))
+    {
+        choiceType = PENJEU;
+        return true;
+    }
+    else if (x>=XPIOCHE && x<(XPIOCHE+CARDWIDTH) && y>=YPIOCHE && y<(YPIOCHE+CARDHEIGHT))
+    {
+        choiceType = PPIOCHE;
+        return true;
+    }
+    else if (x>=XCIMETIERE && x<(XCIMETIERE+CARDWIDTH) && y>=YCIMETIERE && y<(YCIMETIERE+CARDHEIGHT))
+    {
+        choiceType = PCIMETIERE;
+        return true;
+    }
+    else if (x>=XMAIN && x<(XMAIN+MAXHAND*PDIST) && y>=YMAIN && y<(YMAIN+CARDHEIGHT))
+    {
+        if ((x-XMAIN)%PDIST < CARDWIDTH)
+        {
+            choiceType = PMAIN;
+            choiceNum = (int)((x-XMAIN)%PDIST);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    return false;
 }
+
 
 //contient la boucle evennementielle
 void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites)
@@ -91,7 +147,44 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites)
             if (!prevMouse)
             {
                 if (mouse_x>=XENDTURN && mouse_x<=(XENDTURN+WENDTURN) && mouse_y>=YENDTURN && mouse_y<=(YENDTURN+HENDTURN))
-                endTurn = true;
+                    endTurn = true;
+                else
+                {
+                    int choiceType, choiceNum;
+                    if (ClickCheck(0, YSCREEN/2, choiceType, choiceNum))
+                    {
+                        switch (choiceType)
+                        {
+                            case PENERGY:
+
+                        break;
+
+                            case PACTIVE:
+
+                        break;
+
+                            case PSPECIAL:
+
+                        break;
+
+                            case PENJEU:
+
+                        break;
+
+                            case PPIOCHE:
+
+                        break;
+
+                            case PCIMETIERE:
+
+                        break;
+
+                            case PMAIN:
+
+                        break;
+                        }
+                    }
+                }
             }
             prevMouse = true;
         }

@@ -4,8 +4,6 @@
 Creature::Creature(ModeleCreature& _Modele)
     :m_Modele(_Modele)
 {
-    m_CardType = CREATURE;
-
     m_HP = _Modele.GetHP();
     m_AD = _Modele.GetAD();
 }
@@ -13,5 +11,10 @@ Creature::Creature(ModeleCreature& _Modele)
 Creature::~Creature()
 {
     //dtor
+}
+
+CardType Creature::GetCardType()
+{
+    return CREATURE;
 }
 

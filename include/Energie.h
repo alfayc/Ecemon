@@ -1,4 +1,3 @@
-//Don't forget to include what's necessary
 #ifndef ENERGIE_H
 #define ENERGIE_H
 
@@ -10,14 +9,16 @@
 
 class Energie : public Carte
 {
+    private:
+        ModeleEnergie& m_Modele;
+
+    protected:
+
     public:
         Energie(ModeleEnergie& _Modele);
         virtual ~Energie();
 
-    protected:
-
-    private:
-        ModeleEnergie& m_Modele;
+        CardType GetCardType();
 };
 
 #endif // ENERGIE_H
