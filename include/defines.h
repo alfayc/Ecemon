@@ -93,7 +93,7 @@
 
 ///FILE NAMES
 
-#if _WINDOWS
+#ifdef _WINDOWS
 
 #define SOURIS "Res\\mario_mouse_cursor.bmp" //32x30
 #define ENDTURN "Res\\End_Turn_Button.bmp"   //50x30
