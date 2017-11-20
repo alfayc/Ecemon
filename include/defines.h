@@ -15,7 +15,7 @@
 #include "ModeleSpecial.h"
 
 ///MAGIC NUMBERS AND ENUMS
-/* le nombre max de cartes dans les differents endroits du plateau */
+// le nombre max de cartes dans les differents endroits du plateau
 #define MAXHAND 5
 #define MAXACTIVE 5
 #define MAXSPECIAL 1
@@ -23,7 +23,7 @@
 #define NBDOMAINE 4
 
 
-/* enum pour les endroits sur le plateau */
+// enum pour les endroits sur le plateau
 #define PENERGY 1
 #define PACTIVE 2
 #define PSPECIAL 3
@@ -39,7 +39,7 @@
 #define WPLAYERSIDE XSCREEN
 #define HPLAYERSIDE (YSCREEN/2)
 
-/* les dimensions */
+// les dimensions
 #define CARDWIDTH 50
 #define CARDHEIGHT 75
 #define PDIST (CARDWIDTH + MARGIN)
@@ -66,7 +66,7 @@
 #define HENDTURN 30
 
 ///COLORS
-/* des couleurs */
+// des couleurs
 #define BLANC makecol(255,255,255)
 #define NOIR makecol(0,0,0)
 #define ROUGE makecol(255,0,0)
@@ -74,7 +74,7 @@
 #define VERT makecol(0,255,0)
 #define MAG makecol (255,0,255)         //magenta
 
-/** ces couleurs sont celles qu'on utilisait dans le projet ECEcraft. Quand besoin on peut les réutiliser */
+/// ces couleurs sont celles qu'on utilisait dans le projet ECEcraft. Quand besoin on peut les réutiliser
 //#define COL_UI_FOND makecol(1,87,155)
 //#define COL_UI_ACC makecol(79,195,247)
 #define COL_SAND makecol(194,132,80)
@@ -92,10 +92,21 @@
 
 
 ///FILE NAMES
+
+#if defined(WIN32) || defined(WIN64)
+
+#define SOURIS "Res\\mario_mouse_cursor.bmp" //32x30
+#define ENDTURN "Res\\End_Turn_Button.bmp"   //50x30
+
+#else
+
 #define SOURIS "Res/mario_mouse_cursor.bmp" //32x30
 #define ENDTURN "Res/End_Turn_Button.bmp"   //50x30
 
-/* renvoie une erreur de chargement */
+#endif // WIN32
+
+
+// renvoie une erreur de chargement
 #define ERR_CHARG(x) {if(!x){allegro_message("probleme de chargement");exit(1);}}
 
 struct Sprites{
