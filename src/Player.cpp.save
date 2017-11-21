@@ -4,16 +4,16 @@ using namespace std;
 
 Player::Player()
 {
-    m_Enjeu = nullptr;
+    m_Enjeu = NULL;
 
     for (int i=0;i<MAXSPECIAL;i++)
     {
-        m_Special[i] = nullptr;
+        m_Special[i] = NULL;
     }
 
     for (int i=0;i<MAXACTIVE;i++)
     {
-        m_Active[i] = nullptr;
+        m_Active[i] = NULL;
     }
 
 
@@ -26,7 +26,7 @@ Player::Player()
     m_Deck.push(new Creature(*(new ModeleCreature(0))));
     m_Deck.push(new Creature(*(new ModeleCreature(0))));
 
-    m_Exclusive = nullptr;
+    m_Exclusive = NULL;
 
     for (int i=0;i<NBDOMAINE;i++)
     {
@@ -85,7 +85,7 @@ bool ChoiceCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
 
         if ((x-XSPECIAL)%PDIST < CARDWIDTH)
         {
-            choiceType = PSPECIAL;
+            choiceType = PACTIVE;
             choiceNum = (int)((x-XSPECIAL)/PDIST);
             return true;
         }
@@ -137,10 +137,10 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
 
     do
     {
-        this->Draw(playerView, true, p_input);
+        this->Draw(playerView, true);
         blit(playerView, buffer, 0, 0, 0, YSCREEN/2, XSCREEN, YSCREEN/2);
 
-        opponent.Draw(playerView, false, p_input);
+        opponent.Draw(playerView, false);
         blit(playerView, buffer, 0, 0, 0, 0, XSCREEN, YSCREEN/2);
 
         draw_sprite(buffer, sprites.buttonEndTurn, XENDTURN, YENDTURN);
@@ -180,7 +180,7 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
                                 p_input.type = choiceType;
                                 p_input.num = choiceNum;
                                 p_input.x = mouse_x;
-                                p_input.y = mouse_y - YSCREEN/2;
+                                p_input.y = mouse_y;
                                 p_input.dragging = true;
                             }
                         break;
@@ -209,31 +209,35 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
                         case PENERGY:
                         if (type==ENERGIE)
                         {
-                            m_Energie.push(dynamic_cast<Energie *>(m_Main[p_input.num]));
+                            deplace = m_Main[p_input.num];
                             m_Main.erase(m_Main.begin() + p_input.num);
+                            m_Energie.push(dynamic_cast<Energie *>(deplace));
                             m_Energie.top()->Use(m_CurrentEnergy); //on active la nouvelle carte
                         }
                     break;
 
-                        case PACTIVE:PRINT(m_Active[choiceNum]) PRINT(type)
-                        if (type==CREATURE && m_Active[choiceNum]==nullptr) // si il n'y a pas déjà une carte là
-                        {PRINT(10)
-                            m_Active[choiceNum] = dynamic_cast<Creature *>(m_Main[p_input.num]);
-                            m_Main.erase(m_Main.begin() + p_input.num);PRINT(20)
+                        case PACTIVE:
+                        if (type==CREATURE && m_Active[choiceNum]!=nullptr) // si il n'y a pas déjà une carte là
+                        {
+                            deplace = m_Main[p_input.num];
+                            m_Main.erase(m_Main.begin() + p_input.num);
+                            m_Active[choiceNum] = dynamic_cast<Creature *>(deplace);
                         }
                     break;
 
-                        case PSPECIAL:PRINT(30)
-                        if (type==SPECIAL && m_Special[choiceNum]==nullptr)
-                        {PRINT(40)
-                            m_Special[choiceNum] = dynamic_cast<Special *>(m_Main[p_input.num]);
+                        case PSPECIAL:
+                        if (type==SPECIAL && m_Special[choiceNum]!=nullptr)
+                        {
+                            deplace = m_Main[p_input.num];
                             m_Main.erase(m_Main.begin() + p_input.num);
+                            m_Special[choiceNum] = dynamic_cast<Special *>(deplace);
                         }
                     break;
 
                         case PCIMETIERE:
-                        m_Cimetiere.push(m_Main[p_input.num]);
+                        deplace = m_Main[p_input.num];
                         m_Main.erase(m_Main.begin() + p_input.num);
+                        m_Cimetiere.push(deplace);
                     break;
 
                         case PENJEU:
@@ -279,7 +283,7 @@ void Player::Draw(BITMAP *dest, bool turn, const PlayerInput& p_input)
     for (int i=0;i<MAXSPECIAL;i++)
     {
         rect(rep, i*(CARDWIDTH+MARGIN) + XSPECIAL, YSPECIAL, i*(CARDWIDTH+MARGIN) + XSPECIAL+CARDWIDTH, YSPECIAL+CARDHEIGHT, BLEU);
-        if (m_Special[i])
+        if (m_Active[i])
             rectfill(rep, i*(CARDWIDTH+MARGIN) + XSPECIAL, YSPECIAL, i*(CARDWIDTH+MARGIN) + XSPECIAL+CARDWIDTH, YSPECIAL+CARDHEIGHT, BLEU);
     }
 
@@ -319,9 +323,8 @@ void Player::Draw(BITMAP *dest, bool turn, const PlayerInput& p_input)
 
             rectfill(rep, i*(CARDWIDTH+MARGIN) + XMAIN + 1, YMAIN +1, i*(CARDWIDTH+MARGIN) + XMAIN+CARDWIDTH - 1, YMAIN+CARDHEIGHT - 1, col);
         }
-
-        if (p_input.dragging)
-            line(rep, p_input.x, p_input.y, mouse_x, mouse_y-YSCREEN/2, NOIR);
+        
+        line(rep, p_input.x, p_input.y, mouse_x, m)
 
         blit(rep, dest, 0, 0, 0, 0, dest->w, dest->h);
     }

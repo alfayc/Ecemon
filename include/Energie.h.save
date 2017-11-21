@@ -19,8 +19,8 @@ class Energie : public Carte
         virtual ~Energie();
 
         CardType GetCardType();
-
-        void Use(Domaines& where);
+        
+        void use(Player)
 };
 
 #endif // ENERGIE_H

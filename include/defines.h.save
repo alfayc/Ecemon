@@ -52,25 +52,25 @@ struct Domaines{
 #define HPLAYERSIDE (YSCREEN/2)
 
 // les dimensions
-#define CARDWIDTH 70
-#define CARDHEIGHT 100
+#define CARDWIDTH 50
+#define CARDHEIGHT 75
 #define PDIST (CARDWIDTH + MARGIN)
 
 #define MARGIN 10
 #define XENERGY MARGIN
 #define YENERGY MARGIN
-#define XACTIVE (PDIST + MARGIN)
+#define XACTIVE PDIST
 #define YACTIVE MARGIN
-#define XSPECIAL (6*PDIST + MARGIN)
+#define XSPECIAL 370
 #define YSPECIAL MARGIN
 #define XENJEU MARGIN
-#define YENJEU (CARDHEIGHT + 2*MARGIN)
-#define XPIOCHE ((PDIST*7 + 10)/2 - CARDWIDTH/2)
-#define YPIOCHE YENJEU
-#define XCIMETIERE XSPECIAL
-#define YCIMETIERE YENJEU
-#define XMAIN XACTIVE
-#define YMAIN (2*CARDHEIGHT + 3*MARGIN)
+#define YENJEU 95
+#define XPIOCHE 190
+#define YPIOCHE 95
+#define XCIMETIERE 370
+#define YCIMETIERE 95
+#define XMAIN 70
+#define YMAIN 180
 
 #define XENDTURN (XSCREEN/2 - 25)
 #define YENDTURN 350

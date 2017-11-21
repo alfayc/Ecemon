@@ -17,10 +17,10 @@ class Player
         Carte *m_Enjeu;                     //l'enjeu
         Special *m_Special[MAXSPECIAL];     //la/les spéciales persistantes
         Creature *m_Active[MAXACTIVE];      //la/les créatures actives
-        std::stack<Carte*> m_Energie;       //la/les cartes énergies consommées
+        std::stack<Energie *> m_Energie;       //la/les cartes énergies consommées
         Carte *m_Exclusive;                 //la carte exclusive à ce joueur (bowser n'a pas mario etc)
 
-        int m_CurrentEnergy[NBDOMAINE];     //la quantité d'énergie disponible pour chaque domaine
+        Domaines m_CurrentEnergy;     //la quantité d'énergie disponible pour chaque domaine
 
     protected:
 
@@ -29,10 +29,10 @@ class Player
         virtual ~Player();
 
         //turn est vraie si c'est au tour de ce joueur
-        void Draw(BITMAP *dest, bool turn); //affiche les cartes sur la bitmap en paramètre
+        void Draw(BITMAP *dest, bool turn, const PlayerInput& p_input); //affiche les cartes sur la bitmap en paramètre
         void EndTurn();
         void StartTurn();
-        void Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites); //là où y'a la boucle evennementielle
+        void Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, PlayerInput& p_input); //là où y'a la boucle evennementielle
 
 
         //getters/setters

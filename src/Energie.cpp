@@ -4,6 +4,7 @@
 Energie::Energie(ModeleEnergie& _Modele)
     :m_Modele(_Modele)
 {
+
 }
 
 Energie::~Energie()
@@ -15,5 +16,10 @@ Energie::~Energie()
 CardType Energie::GetCardType()
 {
     return ENERGIE;
+}
+
+void Energie::Use(Domaines& where)
+{
+    where.value[m_Modele.GetDomaine()] += m_Modele.GetEnergy();
 }
 

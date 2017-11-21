@@ -4,6 +4,7 @@
 Special::Special(ModeleSpecial& _Modele)
     :m_Modele(_Modele)
 {
+
 }
 
 Special::~Special()

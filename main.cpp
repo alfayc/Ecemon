@@ -18,7 +18,11 @@ int main()
 
     BITMAP *buffer;
     Sprites sprites;
+    PlayerInput p_input;
     Player players[2];
+
+    p_input.dragging = false;
+    p_input.prevClick = false;
 
     load_sprites(sprites);
 
@@ -30,7 +34,7 @@ int main()
         {
             players[i].StartTurn();
 
-            players[i].Turn(players[!i], buffer, sprites);
+            players[i].Turn(players[!i], buffer, sprites, p_input);
 
             if (key[KEY_ESC])
                 break;
@@ -48,8 +52,8 @@ int main()
 
 void load_sprites(Sprites& sprites)
 {
-    sprites.souris = load_bitmap(SOURIS, NULL);ERR_CHARG(sprites.souris)
-    sprites.buttonEndTurn = load_bitmap(ENDTURN, NULL);ERR_CHARG(sprites.buttonEndTurn)
+    sprites.souris = load_bitmap(SOURIS, nullptr);ERR_CHARG(sprites.souris)
+    sprites.buttonEndTurn = load_bitmap(ENDTURN, nullptr);ERR_CHARG(sprites.buttonEndTurn)
 }
 
 //initialisation de allegro
@@ -61,7 +65,7 @@ void init_alleg(int sizex, int sizey)
     install_mouse();
 
     install_timer();
-    srand(time(NULL));
+    srand(time(nullptr));
 
     set_color_depth(desktop_color_depth());
     if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, sizex, sizey, 0, 0))
