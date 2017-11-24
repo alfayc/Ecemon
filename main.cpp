@@ -39,7 +39,7 @@ int main()
             if (key[KEY_ESC])
                 break;
 
-            players[i].EndTurn();
+            players[i].EndTurn(players[!i]);
         }
 
     }

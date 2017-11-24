@@ -35,9 +35,14 @@
 struct PlayerInput{
     bool prevClick;
     bool dragging;
-    int x, y;
-    int type;
-    int num;
+
+    int startX, startY;
+    int startType;
+    int startNum;
+
+    int endX, endY;
+    int endType;
+    int endNum;
 };
 
 struct Domaines{
@@ -48,6 +53,9 @@ struct Domaines{
 ///GRAPHICS DIMENTIONS AND COORDINATES
 #define XSCREEN 600
 #define YSCREEN 800
+
+#define XPLAYERSIDE 0
+#define YPLAYERSIDE (YSCREEN/2)
 #define WPLAYERSIDE XSCREEN
 #define HPLAYERSIDE (YSCREEN/2)
 

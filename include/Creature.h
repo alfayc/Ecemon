@@ -12,6 +12,9 @@ class Creature : public Carte
         int m_HP;
         int m_AD;
 
+        bool m_Attack;
+        int m_Cible; //le numéro de la carte ennemie à attaquer. -1 si c'est directement le joueur
+
     protected:
 
     public:
@@ -19,6 +22,12 @@ class Creature : public Carte
         virtual ~Creature();
 
         CardType GetCardType();
+
+        void SetAttack(int who);
+        virtual int TakeDamage(int quant);
+        virtual void EndTurn(Player& ally, Player& enemy);
+
+        int GetHP() { return m_HP; }
 };
 
 #endif // CREATURE_H

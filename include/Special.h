@@ -5,12 +5,14 @@
 #include "Carte.h"
 #include "ModeleSpecial.h"
 
-
+class Player;
 
 class Special : public Carte
 {
     private:
         ModeleSpecial& m_Modele;
+
+        int m_ActiveLeft;
 
     protected:
 
@@ -18,7 +20,12 @@ class Special : public Carte
         Special(ModeleSpecial& _Modele);
         virtual ~Special();
 
+        void StartTurn();
+        void EndTurn(Player& ally, Player& enemy);
+
         CardType GetCardType();
+
+        int GetActiveLeft() { return m_ActiveLeft; }
 };
 
 #endif // SPECIAL_H

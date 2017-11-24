@@ -3,6 +3,7 @@
 
 #include "defines.h"
 
+class Player;
 
 enum CardType{
     ENERGIE = 0,

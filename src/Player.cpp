@@ -39,9 +39,15 @@ Player::~Player()
     //dtor
 }
 
-void Player::EndTurn()
+void Player::EndTurn(Player& enemy)
 {
-
+    for (int i=0;i<MAXSPECIAL;i++)
+    {
+        if (m_Special[i])
+        {
+            m_Special[i]->EndTurn(*this, enemy);
+        }
+    }
 }
 
 void Player::StartTurn()
@@ -51,12 +57,41 @@ void Player::StartTurn()
         m_Main.push_back(m_Deck.front()); //on met la carte en haut de la pioche dans la main
         m_Deck.pop(); //on enlève la carte d'en haut de la pioche
     }
+
+    for (int i=0;i<MAXSPECIAL;i++)
+    {
+        if (m_Special[i])
+        {
+            m_Special[i]->StartTurn();
+
+            if (!m_Special[i]->GetActiveLeft()) //si la carte a expiré, faut l'enlever
+            {
+                m_Cimetiere.push(m_Special[i]);
+                m_Special[i] = nullptr;
+            }
+        }
+    }
+
+    //check des créatures en jeu
+    for (int i=0;i<MAXACTIVE;i++)
+    {
+        if (m_Active[i])
+        {
+            if (!m_Active[i]->GetHP()) //si hp=0 de la carte, faut l'enlever
+            {
+                m_Cimetiere.push(m_Active[i]);
+                m_Active[i] = nullptr;
+            }
+        }
+    }
 }
 
 bool ChoiceCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
 {
     int x = mouse_x - xOffset;
     int y = mouse_y - yOffset;
+
+    choiceNum = 0;
 
     if (x<0 || x>=WPLAYERSIDE || y<0 || y>=HPLAYERSIDE)
         return false;
@@ -128,6 +163,86 @@ bool ChoiceCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
 }
 
 
+bool Player::InputCheck(PlayerInput& p_input)
+{
+    bool rep = false;
+
+    if (mouse_b&1)
+    {
+        if (!p_input.prevClick)
+        {
+            int choiceType, choiceNum;
+            if (ChoiceCheck(XPLAYERSIDE, YPLAYERSIDE, choiceType, choiceNum)) //blindage QUE pour les cartes qui existent
+            {
+                PRINT(choiceType)
+                PRINT(choiceNum)
+
+                bool couldClick = false;
+
+                switch (choiceType)
+                {
+                    case PENERGY:
+                    case PENJEU:
+                    case PPIOCHE:
+                    case PCIMETIERE:
+                    couldClick = true;
+                break;
+
+                    case PSPECIAL:
+                    if (m_Special[choiceNum])
+                        couldClick = true;
+                    break;
+
+                    case PACTIVE:
+                    if (m_Active[choiceNum])
+                        couldClick = true;
+                break;
+
+                    case PMAIN:
+                    if (choiceNum < m_Main.size())
+                        couldClick = true;
+                break;
+                }
+
+                if (couldClick)
+                {
+                    p_input.startType = choiceType;
+                    p_input.startNum = choiceNum;
+                    p_input.startX = mouse_x - XPLAYERSIDE;
+                    p_input.startY = mouse_y - YPLAYERSIDE;
+                    p_input.dragging = true;
+                }
+            }
+        }
+        p_input.prevClick = true;
+    }
+    else
+    {
+        if (p_input.dragging)
+        {
+            p_input.dragging = false;
+
+            int choiceType, choiceNum;
+            if (ChoiceCheck(XPLAYERSIDE, YPLAYERSIDE, choiceType, choiceNum)) // on blinde PAS les qui existent/n'existent pas
+            {
+                PRINT(choiceType)
+                PRINT(choiceNum)
+
+                rep = true;
+
+                p_input.endType = choiceType;
+                p_input.endNum = choiceNum;
+                p_input.endX = mouse_x - XPLAYERSIDE;
+                p_input.endY = mouse_y - YPLAYERSIDE;
+
+            }
+        }
+
+        p_input.prevClick = false;
+    }
+    return rep;
+}
+
 //contient la boucle evennementielle
 void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, PlayerInput& p_input)
 {
@@ -155,99 +270,68 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
             {
                 if (mouse_x>=XENDTURN && mouse_x<=(XENDTURN+WENDTURN) && mouse_y>=YENDTURN && mouse_y<=(YENDTURN+HENDTURN))
                     endTurn = true;
-                else
-                {
-                    int choiceType, choiceNum;
-                    if (ChoiceCheck(0, YSCREEN/2, choiceType, choiceNum))
-                    {
-                        PRINT(choiceType)
-                        PRINT(choiceNum)
-
-                        switch (choiceType)
-                        {
-                            case PENERGY:
-                            case PACTIVE:
-                            case PSPECIAL:
-                            case PENJEU:
-                            case PPIOCHE:
-                            case PCIMETIERE:
-
-                        break;
-
-                            case PMAIN:
-                            if (choiceNum < m_Main.size())
-                            {
-                                p_input.type = choiceType;
-                                p_input.num = choiceNum;
-                                p_input.x = mouse_x;
-                                p_input.y = mouse_y - YSCREEN/2;
-                                p_input.dragging = true;
-                            }
-                        break;
-                        }
-                    }
-                }
             }
-            p_input.prevClick = true;
         }
-        else
+
+        if (InputCheck(p_input))
         {
-            if (p_input.dragging)
+            switch (p_input.startType)
             {
-                p_input.dragging = false;
+                case PENERGY:
+                case PENJEU:
+                case PPIOCHE:
+                case PCIMETIERE:
+                case PSPECIAL:
+                case PACTIVE:
 
-                int choiceType, choiceNum; ///pour l'instant que popur drag depuis la main
-                if (ChoiceCheck(0, YSCREEN/2, choiceType, choiceNum))
+            break;
+
+                case PMAIN: //drag depuis la main
+                CardType type = m_Main[p_input.startNum]->GetCardType();
+
+                switch (p_input.endType)
                 {
-                    PRINT(choiceType)
-                    PRINT(choiceNum)
-                    CardType type = m_Main[p_input.num]->GetCardType();
-
-                    Carte *deplace = nullptr;
-                    switch (choiceType)
+                    case PENERGY:
+                    if (type==ENERGIE)
                     {
-                        case PENERGY:
-                        if (type==ENERGIE)
-                        {
-                            m_Energie.push(dynamic_cast<Energie *>(m_Main[p_input.num]));
-                            m_Main.erase(m_Main.begin() + p_input.num);
-                            m_Energie.top()->Use(m_CurrentEnergy); //on active la nouvelle carte
-                        }
-                    break;
-
-                        case PACTIVE:PRINT(m_Active[choiceNum]) PRINT(type)
-                        if (type==CREATURE && m_Active[choiceNum]==nullptr) // si il n'y a pas déjà une carte là
-                        {PRINT(10)
-                            m_Active[choiceNum] = dynamic_cast<Creature *>(m_Main[p_input.num]);
-                            m_Main.erase(m_Main.begin() + p_input.num);PRINT(20)
-                        }
-                    break;
-
-                        case PSPECIAL:PRINT(30)
-                        if (type==SPECIAL && m_Special[choiceNum]==nullptr)
-                        {PRINT(40)
-                            m_Special[choiceNum] = dynamic_cast<Special *>(m_Main[p_input.num]);
-                            m_Main.erase(m_Main.begin() + p_input.num);
-                        }
-                    break;
-
-                        case PCIMETIERE:
-                        m_Cimetiere.push(m_Main[p_input.num]);
-                        m_Main.erase(m_Main.begin() + p_input.num);
-                    break;
-
-                        case PENJEU:
-                    break;
-                        case PPIOCHE:
-                    break;
-                        case PMAIN:
-                    break;
+                        m_Energie.push(dynamic_cast<Energie *>(m_Main[p_input.startNum]));
+                        m_Main.erase(m_Main.begin() + p_input.startNum);
+                        m_Energie.top()->Use(m_CurrentEnergy); //on active la nouvelle carte
                     }
+                break;
+
+                    case PACTIVE:PRINT(m_Active[p_input.endNum]) PRINT(type)
+                    if (type==CREATURE && m_Active[p_input.endNum]==nullptr) // si il n'y a pas déjà une carte là
+                    {PRINT(10)
+                        m_Active[p_input.endNum] = dynamic_cast<Creature *>(m_Main[p_input.startNum]);
+                        m_Main.erase(m_Main.begin() + p_input.startNum);PRINT(20)
+                    }
+                break;
+
+                    case PSPECIAL:PRINT(30)
+                    if (type==SPECIAL && m_Special[p_input.endNum]==nullptr)
+                    {PRINT(40)
+                        m_Special[p_input.endNum] = dynamic_cast<Special *>(m_Main[p_input.startNum]);
+                        m_Main.erase(m_Main.begin() + p_input.startNum);
+                    }
+                break;
+
+                    case PCIMETIERE:
+                    m_Cimetiere.push(m_Main[p_input.startNum]);
+                    m_Main.erase(m_Main.begin() + p_input.startNum);
+                break;
+
+                    case PENJEU:
+                    case PPIOCHE:
+                    case PMAIN:
+
+                break;
                 }
+            break;
             }
 
-            p_input.prevClick = false;
         }
+
 
         rest(20);
 
@@ -321,7 +405,7 @@ void Player::Draw(BITMAP *dest, bool turn, const PlayerInput& p_input)
         }
 
         if (p_input.dragging)
-            line(rep, p_input.x, p_input.y, mouse_x, mouse_y-YSCREEN/2, NOIR);
+            line(rep, p_input.startX, p_input.startY, mouse_x, mouse_y-YSCREEN/2, NOIR);
 
         blit(rep, dest, 0, 0, 0, 0, dest->w, dest->h);
     }
@@ -333,4 +417,11 @@ void Player::Draw(BITMAP *dest, bool turn, const PlayerInput& p_input)
     destroy_bitmap(rep);
 }
 
+void Player::TakeDamage(int quant)
+{
+    m_HP -= quant;
+
+    if (m_HP<0)
+        m_HP = 0;
+}
 
