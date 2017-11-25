@@ -3,6 +3,7 @@
 using namespace std;
 
 Player::Player()
+    :m_HP(20), m_MaxHP(20)
 {
     m_Enjeu = nullptr;
 
@@ -41,6 +42,8 @@ Player::~Player()
 
 void Player::EndTurn(Player& enemy)
 {
+    //update de toutes les cartes
+
     for (int i=0;i<MAXSPECIAL;i++)
     {
         if (m_Special[i])
@@ -48,6 +51,17 @@ void Player::EndTurn(Player& enemy)
             m_Special[i]->EndTurn(*this, enemy);
         }
     }
+
+    //TOUJOURS FAIRE LES SPECIALES AVANT LES AUTRES
+
+    for (int i=0;i<MAXACTIVE;i++)
+    {
+        if (m_Active[i])
+        {
+            m_Active[i]->EndTurn(*this, enemy);
+        }
+    }
+
 }
 
 void Player::StartTurn()
@@ -86,10 +100,20 @@ void Player::StartTurn()
     }
 }
 
-bool ChoiceCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
+bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
 {
-    int x = mouse_x - xOffset;
-    int y = mouse_y - yOffset;
+    int x = mouse_x - XPLAYERSIDE;
+    int y = mouse_y;
+
+    if (y<YPLAYERSIDE)
+    {
+        side = 0;
+    }
+    else
+    {
+        y -= YPLAYERSIDE;
+        side = 1;
+    }
 
     choiceNum = 0;
 
@@ -99,7 +123,6 @@ bool ChoiceCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
     //test de chaque case. pourrait être fait avec des modulos + switch mais vu qu'on va peut être pas aligner les cartes...
     if (x>=XENERGY && x<XENERGY+CARDWIDTH && y>=YENERGY && y<YENERGY+CARDHEIGHT)
     {
-
         choiceType = PENERGY;
         return true;
     }
@@ -129,23 +152,20 @@ bool ChoiceCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
     }
     else if (x>=XENJEU && x<(XENJEU+CARDWIDTH) && y>=YENJEU && y<(YENJEU+CARDHEIGHT))
     {
-
         choiceType = PENJEU;
         return true;
     }
     else if (x>=XPIOCHE && x<(XPIOCHE+CARDWIDTH) && y>=YPIOCHE && y<(YPIOCHE+CARDHEIGHT))
     {
-
         choiceType = PPIOCHE;
         return true;
     }
     else if (x>=XCIMETIERE && x<(XCIMETIERE+CARDWIDTH) && y>=YCIMETIERE && y<(YCIMETIERE+CARDHEIGHT))
     {
-
         choiceType = PCIMETIERE;
         return true;
     }
-    else if (x>=XMAIN && x<(XMAIN+MAXHAND*PDIST) && y>=YMAIN && y<(YMAIN+CARDHEIGHT))
+    else if (side && x>=XMAIN && x<(XMAIN+MAXHAND*PDIST) && y>=YMAIN && y<(YMAIN+CARDHEIGHT))
     {
 
         if ((x-XMAIN)%PDIST < CARDWIDTH)
@@ -156,6 +176,11 @@ bool ChoiceCheck(int xOffset, int yOffset, int& choiceType, int& choiceNum)
         }
         else
             return false;
+    }
+    else if (x>=XPLAYER && x<(XPLAYER+WPLAYER) && y>=YPLAYER && y<(YPLAYER+HPLAYER))
+    {
+        choiceType = PPLAYER;
+        return true;
     }
 
 
@@ -172,10 +197,8 @@ bool Player::InputCheck(PlayerInput& p_input)
         if (!p_input.prevClick)
         {
             int choiceType, choiceNum;
-            if (ChoiceCheck(XPLAYERSIDE, YPLAYERSIDE, choiceType, choiceNum)) //blindage QUE pour les cartes qui existent
+            if (ChoiceCheck(choiceType, choiceNum, p_input.startSide)) //blindage QUE pour les cartes qui existent
             {
-                PRINT(choiceType)
-                PRINT(choiceNum)
 
                 bool couldClick = false;
 
@@ -185,6 +208,7 @@ bool Player::InputCheck(PlayerInput& p_input)
                     case PENJEU:
                     case PPIOCHE:
                     case PCIMETIERE:
+                    case PPLAYER:
                     couldClick = true;
                 break;
 
@@ -199,7 +223,7 @@ bool Player::InputCheck(PlayerInput& p_input)
                 break;
 
                     case PMAIN:
-                    if (choiceNum < m_Main.size())
+                    if (p_input.startSide && choiceNum < m_Main.size()) //on ne prend la main que du joueur
                         couldClick = true;
                 break;
                 }
@@ -208,8 +232,8 @@ bool Player::InputCheck(PlayerInput& p_input)
                 {
                     p_input.startType = choiceType;
                     p_input.startNum = choiceNum;
-                    p_input.startX = mouse_x - XPLAYERSIDE;
-                    p_input.startY = mouse_y - YPLAYERSIDE;
+                    p_input.startX = mouse_x;
+                    p_input.startY = mouse_y;
                     p_input.dragging = true;
                 }
             }
@@ -223,17 +247,14 @@ bool Player::InputCheck(PlayerInput& p_input)
             p_input.dragging = false;
 
             int choiceType, choiceNum;
-            if (ChoiceCheck(XPLAYERSIDE, YPLAYERSIDE, choiceType, choiceNum)) // on blinde PAS les qui existent/n'existent pas
+            if (ChoiceCheck(choiceType, choiceNum, p_input.endSide)) // on blinde PAS les qui existent/n'existent pas
             {
-                PRINT(choiceType)
-                PRINT(choiceNum)
-
                 rep = true;
 
                 p_input.endType = choiceType;
                 p_input.endNum = choiceNum;
-                p_input.endX = mouse_x - XPLAYERSIDE;
-                p_input.endY = mouse_y - YPLAYERSIDE;
+                p_input.endX = mouse_x;
+                p_input.endY = mouse_y;
 
             }
         }
@@ -243,7 +264,7 @@ bool Player::InputCheck(PlayerInput& p_input)
     return rep;
 }
 
-//contient la boucle evennementielle
+///contient la boucle evennementielle
 void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, PlayerInput& p_input)
 {
     bool endTurn = false;
@@ -252,11 +273,13 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
 
     do
     {
-        this->Draw(playerView, true, p_input);
+        this->Draw(playerView, true, sprites, p_input);
         blit(playerView, buffer, 0, 0, 0, YSCREEN/2, XSCREEN, YSCREEN/2);
 
-        opponent.Draw(playerView, false, p_input);
+        opponent.Draw(playerView, false, sprites, p_input);
         blit(playerView, buffer, 0, 0, 0, 0, XSCREEN, YSCREEN/2);
+
+        line(buffer, 0, YSCREEN/2, XSCREEN, YSCREEN/2, NOIR);
 
         draw_sprite(buffer, sprites.buttonEndTurn, XENDTURN, YENDTURN);
         //cout << mouse_x << " " << mouse_y << endl;
@@ -275,61 +298,109 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
 
         if (InputCheck(p_input))
         {
-            switch (p_input.startType)
+            if (p_input.startSide)
             {
-                case PENERGY:
-                case PENJEU:
-                case PPIOCHE:
-                case PCIMETIERE:
-                case PSPECIAL:
-                case PACTIVE:
-
-            break;
-
-                case PMAIN: //drag depuis la main
-                CardType type = m_Main[p_input.startNum]->GetCardType();
-
-                switch (p_input.endType)
+                switch (p_input.startType)
                 {
                     case PENERGY:
-                    if (type==ENERGIE)
-                    {
-                        m_Energie.push(dynamic_cast<Energie *>(m_Main[p_input.startNum]));
-                        m_Main.erase(m_Main.begin() + p_input.startNum);
-                        m_Energie.top()->Use(m_CurrentEnergy); //on active la nouvelle carte
-                    }
-                break;
-
-                    case PACTIVE:PRINT(m_Active[p_input.endNum]) PRINT(type)
-                    if (type==CREATURE && m_Active[p_input.endNum]==nullptr) // si il n'y a pas déjà une carte là
-                    {PRINT(10)
-                        m_Active[p_input.endNum] = dynamic_cast<Creature *>(m_Main[p_input.startNum]);
-                        m_Main.erase(m_Main.begin() + p_input.startNum);PRINT(20)
-                    }
-                break;
-
-                    case PSPECIAL:PRINT(30)
-                    if (type==SPECIAL && m_Special[p_input.endNum]==nullptr)
-                    {PRINT(40)
-                        m_Special[p_input.endNum] = dynamic_cast<Special *>(m_Main[p_input.startNum]);
-                        m_Main.erase(m_Main.begin() + p_input.startNum);
-                    }
-                break;
-
-                    case PCIMETIERE:
-                    m_Cimetiere.push(m_Main[p_input.startNum]);
-                    m_Main.erase(m_Main.begin() + p_input.startNum);
-                break;
-
                     case PENJEU:
                     case PPIOCHE:
-                    case PMAIN:
+                    case PCIMETIERE:
+                    case PPLAYER:
+
+                break;
+
+                    case PACTIVE:
+//                    if (!m_Active[p_input.endNum]) //on blinde si la carte n'éxistait pas
+//                        break;
+
+                    if (!p_input.endSide) //si on lache le drag dans le camp adversaire
+                    {
+                        if (p_input.endType==PACTIVE)
+                        {
+                            if (opponent.GetActive(p_input.endNum))
+                            {
+                                this->m_Active[p_input.startNum]->SetAttack(p_input.endNum);
+                            }
+                        }
+                        else if (p_input.endType==PPLAYER)
+                        {
+                            this->m_Active[p_input.startNum]->SetAttack(-1);//on lui dit d'attaquer le joueur ennemi
+                        }
+                    }
+                    else// si on lache le drag dans le camp allié
+                    {
+                        if (p_input.endType==PCIMETIERE)
+                        {
+                            m_Cimetiere.push(m_Active[p_input.startNum]);
+                            m_Active[p_input.startNum] = nullptr;
+                        }
+                    }
+                break;
+
+                    case PSPECIAL: //SI PSPECIAL OU PACTIVE!!!! (on a pas break; le PACTIVE)
+                    if (!m_Special[p_input.endNum]) //on blinde si la carte n'éxistait pas
+                        break;
+                    if (p_input.endSide)
+                    {
+                        if (p_input.endType==PCIMETIERE)
+                        {
+                            m_Cimetiere.push(m_Special[p_input.startNum]);
+                            m_Special[p_input.startNum] = nullptr;
+                        }
+                    }
+
+                break;
+
+                    case PMAIN: //drag depuis la main
+                    if (p_input.endSide)
+                    {
+                        CardType type = m_Main[p_input.startNum]->GetCardType();
+
+                        switch (p_input.endType)
+                        {
+                            case PENERGY:
+                            if (type==ENERGIE)
+                            {
+                                m_Energie.push(dynamic_cast<Energie *>(m_Main.at(p_input.startNum)));
+                                m_Main.erase(m_Main.begin() + p_input.startNum);
+                                m_Energie.top()->Use(m_CurrentEnergy); //on active la nouvelle carte
+                            }
+                        break;
+
+                            case PACTIVE:
+                            if (type==CREATURE && m_Active[p_input.endNum]==nullptr) // si il n'y a pas déjà une carte là
+                            {
+                                m_Active[p_input.endNum] = dynamic_cast<Creature *>(m_Main.at(p_input.startNum));
+                                m_Main.erase(m_Main.begin() + p_input.startNum);
+                            }
+                        break;
+
+                            case PSPECIAL:
+                            if (type==SPECIAL && m_Special[p_input.endNum]==nullptr)
+                            {
+                                m_Special[p_input.endNum] = dynamic_cast<Special *>(m_Main.at(p_input.startNum));
+                                m_Main.erase(m_Main.begin() + p_input.startNum);
+                            }
+                        break;
+
+                            case PCIMETIERE:
+                            m_Cimetiere.push(m_Main.at(p_input.startNum));
+                            m_Main.erase(m_Main.begin() + p_input.startNum);
+                        break;
+
+                            case PENJEU:
+                            case PPIOCHE:
+                            case PPLAYER:
+                            case PMAIN:
+
+                        break;
+                        }
+                    }
 
                 break;
                 }
-            break;
             }
-
         }
 
 
@@ -343,7 +414,7 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
     p_input.dragging = false;
 }
 
-void Player::Draw(BITMAP *dest, bool turn, const PlayerInput& p_input)
+void Player::Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerInput& p_input)
 {
     int col = 0;
     BITMAP *rep = create_bitmap(dest->w, dest->h);
@@ -357,7 +428,11 @@ void Player::Draw(BITMAP *dest, bool turn, const PlayerInput& p_input)
     {
         rect(rep, i*(CARDWIDTH+MARGIN) + XACTIVE, YACTIVE, i*(CARDWIDTH+MARGIN) + XACTIVE+CARDWIDTH, YACTIVE+CARDHEIGHT, ROUGE);
         if (m_Active[i])
+        {
             rectfill(rep, i*(CARDWIDTH+MARGIN) + XACTIVE, YACTIVE, i*(CARDWIDTH+MARGIN) + XACTIVE+CARDWIDTH, YACTIVE+CARDHEIGHT, ROUGE);
+            textprintf_ex(rep, font, i*(CARDWIDTH+MARGIN) + XACTIVE, YACTIVE + MARGIN, NOIR, -1, " HP: %d", m_Active[i]->GetHP());
+            textprintf_ex(rep, font, i*(CARDWIDTH+MARGIN) + XACTIVE, YACTIVE + 2*MARGIN, NOIR, -1, " AD: %d", m_Active[i]->GetAD());
+        }
     }
 
     for (int i=0;i<MAXSPECIAL;i++)
@@ -379,12 +454,16 @@ void Player::Draw(BITMAP *dest, bool turn, const PlayerInput& p_input)
     if (!m_Cimetiere.empty())
         rectfill(rep, XCIMETIERE, YCIMETIERE, XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);
 
+    rectfill(rep, XPLAYER, YPLAYER, XPLAYER+WPLAYER-1, YPLAYER+HPLAYER-1, (p_input.whoTurn^turn)?COL_P1_FOND:COL_P2_FOND);
+    draw_sprite(rep, sprites.buttonPlayer, XPLAYER, YPLAYER);
+
+    textprintf_ex(rep, font, XPLAYER, YPLAYER + HPLAYER + MARGIN, NOIR, -1, "HP: %d/%d", m_HP, m_MaxHP);
 
     if (turn)
     {
         for (unsigned int i = 0;i<m_Main.size();i++) //m_Main est un vecteur (données contingues en mémoire)
         {
-            switch (m_Main[i]->GetCardType())
+            switch (m_Main.at(i)->GetCardType())
             {
                 case ENERGIE:
                 col = NOIR;
@@ -405,14 +484,19 @@ void Player::Draw(BITMAP *dest, bool turn, const PlayerInput& p_input)
         }
 
         if (p_input.dragging)
-            line(rep, p_input.startX, p_input.startY, mouse_x, mouse_y-YSCREEN/2, NOIR);
+            line(rep, p_input.startX - XPLAYERSIDE, p_input.startY - YPLAYERSIDE, mouse_x, mouse_y-YSCREEN/2, NOIR);
 
-        blit(rep, dest, 0, 0, 0, 0, dest->w, dest->h);
     }
     else
     {
-        rotate_sprite(dest, rep, 0, 0, 128); //rotation complète
+
+        if (p_input.dragging)
+            line(rep, p_input.startX , p_input.startY , mouse_x, mouse_y, NOIR);
+
+        //rotate_sprite(dest, rep, 0, 0, 128); //rotation complète
     }
+
+    blit(rep, dest, 0, 0, 0, 0, dest->w, dest->h);
 
     destroy_bitmap(rep);
 }
@@ -424,4 +508,10 @@ void Player::TakeDamage(int quant)
     if (m_HP<0)
         m_HP = 0;
 }
+
+void Player::ResetHP()
+{
+    m_HP = m_MaxHP;
+}
+
 

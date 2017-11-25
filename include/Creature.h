@@ -28,6 +28,7 @@ class Creature : public Carte
         virtual void EndTurn(Player& ally, Player& enemy);
 
         int GetHP() { return m_HP; }
+        int GetAD() { return m_AD; }
 };
 
 #endif // CREATURE_H

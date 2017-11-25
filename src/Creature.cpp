@@ -3,6 +3,8 @@
 
 #include "Player.h"
 
+using namespace std;
+
 Creature::Creature(ModeleCreature& _Modele)
     :m_Modele(_Modele), m_HP(_Modele.GetHP()), m_AD(_Modele.GetAD()), m_Attack(false), m_Cible(0)
 {
@@ -50,6 +52,7 @@ void Creature::EndTurn(Player& ally, Player& enemy)
         }
         else
         {
+
             int retenue = 0;
 
             retenue = enemy.GetActive(m_Cible)->TakeDamage(m_AD);
@@ -59,6 +62,8 @@ void Creature::EndTurn(Player& ally, Player& enemy)
                 enemy.TakeDamage(retenue);
             }
         }
+
+        m_Attack = false;
     }
 }
 

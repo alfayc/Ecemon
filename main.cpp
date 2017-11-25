@@ -2,7 +2,7 @@
 #include "Player.h"
 
 /**
-  * std::dynamic_cast
+  * il aurait fallu depuis le début faire une classe bouton avec une fonction bool clicked() mais bon
   */
 
 
@@ -20,6 +20,7 @@ int main()
     Sprites sprites;
     PlayerInput p_input;
     Player players[2];
+    bool endGame = false;
 
     p_input.dragging = false;
     p_input.prevClick = false;
@@ -28,11 +29,13 @@ int main()
 
     buffer = create_bitmap(XSCREEN, YSCREEN);
 
-    while (!key[KEY_ESC])
+    while (!key[KEY_ESC] && !endGame)
     {
         for (int i=0;i<2;i++)
         {
             players[i].StartTurn();
+
+            p_input.whoTurn = i;
 
             players[i].Turn(players[!i], buffer, sprites, p_input);
 
@@ -40,6 +43,12 @@ int main()
                 break;
 
             players[i].EndTurn(players[!i]);
+
+            if (!players[0].GetHP() || !players[1].GetHP())
+            {
+                endGame = true;
+                cout << endl << "partie terminée!!" << endl;
+            }
         }
 
     }
@@ -52,8 +61,9 @@ int main()
 
 void load_sprites(Sprites& sprites)
 {
-    sprites.souris = load_bitmap(SOURIS, nullptr);ERR_CHARG(sprites.souris)
-    sprites.buttonEndTurn = load_bitmap(ENDTURN, nullptr);ERR_CHARG(sprites.buttonEndTurn)
+    sprites.souris = load_bitmap(FSOURIS, nullptr);ERR_CHARG(sprites.souris)
+    sprites.buttonEndTurn = load_bitmap(FENDTURN, nullptr);ERR_CHARG(sprites.buttonEndTurn)
+    sprites.buttonPlayer= load_bitmap(FPLAYER, nullptr);ERR_CHARG(sprites.buttonPlayer)
 }
 
 //initialisation de allegro

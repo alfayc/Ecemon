@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYER_H_INCLUDED
+#define PLAYER_H_INCLUDED
 
 #include "defines.h"
 #include "Creature.h"
@@ -20,7 +20,7 @@ class Player
         std::stack<Energie *> m_Energie;    //la/les cartes énergies consommées
         Carte *m_Exclusive;                 //la carte exclusive à ce joueur (bowser n'a pas mario etc)
 
-        Domaines m_CurrentEnergy;     //la quantité d'énergie disponible pour chaque domaine
+        Domaines m_CurrentEnergy;           //la quantité d'énergie disponible pour chaque domaine
         int m_HP;
         int m_MaxHP;
 
@@ -33,13 +33,17 @@ class Player
         virtual ~Player();
 
         //turn est vraie si c'est au tour de ce joueur
-        void Draw(BITMAP *dest, bool turn, const PlayerInput& p_input); //affiche les cartes sur la bitmap en paramètre
+        void Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerInput& p_input); //affiche les cartes sur la bitmap en paramètre
         void EndTurn(Player& enemy);
         void StartTurn();
         void Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, PlayerInput& p_input); //là où y'a la boucle evennementielle
 
         void TakeDamage(int quant);
 
+        //accesseurs "utiles"/"necessaires"
+        int GetHP() { return m_HP; }
+        void ResetHP();
+        //void PlaceEnjeu();
 
         //getters/setters
         std::string GetNom() { return m_Nom; }
@@ -59,4 +63,4 @@ class Player
         Creature* GetActive(int num) { return m_Active[num]; }
 };
 
-#endif // PLAYER_H
+#endif // PLAYER_H_INCLUDED
