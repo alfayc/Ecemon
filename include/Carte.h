@@ -23,6 +23,7 @@ class Carte
         virtual ~Carte();
 
         virtual CardType GetCardType() = 0;
+        virtual BITMAP *GetCardFront() = 0;
 };
 
 #endif // CARTE_H

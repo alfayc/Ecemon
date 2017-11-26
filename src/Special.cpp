@@ -18,6 +18,11 @@ CardType Special::GetCardType()
     return SPECIAL;
 }
 
+BITMAP *Special::GetCardFront()
+{
+    return nullptr;
+}
+
 void Special::StartTurn()
 {
     m_ActiveLeft--;

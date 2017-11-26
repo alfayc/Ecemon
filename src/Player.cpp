@@ -282,7 +282,7 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
         line(buffer, 0, YSCREEN/2, XSCREEN, YSCREEN/2, NOIR);
 
         draw_sprite(buffer, sprites.buttonEndTurn, XENDTURN, YENDTURN);
-        //cout << mouse_x << " " << mouse_y << endl;
+        cout << mouse_x << " " << mouse_y << endl;
 
         draw_sprite(buffer, sprites.souris, mouse_x, mouse_y);
         blit(buffer, screen, 0, 0, 0, 0, XSCREEN, YSCREEN);
@@ -420,21 +420,41 @@ void Player::Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerI
     BITMAP *rep = create_bitmap(dest->w, dest->h);
     rectfill(rep, 0, 0, dest->w, dest->h, BLANC);
 
-    rect(rep, XENERGY, YENERGY, XENERGY+CARDWIDTH, YENERGY+CARDHEIGHT, NOIR);
-    if (!m_Energie.empty())
-        rectfill(rep, XENERGY, YENERGY, XENERGY+CARDWIDTH, YENERGY+CARDHEIGHT, NOIR);
+    int  x, y;
 
+    x = XENERGY;//pour être dans le réfferentiel de la carte
+    y = YENERGY;
+    //la face de la carte en haut + infos
+    rect(rep, x, y, x+CARDWIDTH, y+CARDHEIGHT, NOIR);
+    if (!m_Energie.empty())
+    {
+
+        draw_sprite(rep, sprites.cardTemplate, x, y);
+
+        rectfill(rep, x + XDESCRI, y + YDESCRI, x + XDESCRI + WDESCRI, y + YDESCRI + HDESCRI, NOIR);
+
+    }
+
+    //face de la carte + infos
     for (int i=0;i<MAXACTIVE;i++)
     {
-        rect(rep, i*(CARDWIDTH+MARGIN) + XACTIVE, YACTIVE, i*(CARDWIDTH+MARGIN) + XACTIVE+CARDWIDTH, YACTIVE+CARDHEIGHT, ROUGE);
+        int x = XACTIVE + i*(CARDWIDTH+MARGIN), y = YACTIVE; //pour être dans le réfferentiel de la carte
+
+        rect(rep, x - 1 , y - 1, x + CARDWIDTH, y + CARDHEIGHT, ROUGE);
+
         if (m_Active[i])
         {
-            rectfill(rep, i*(CARDWIDTH+MARGIN) + XACTIVE, YACTIVE, i*(CARDWIDTH+MARGIN) + XACTIVE+CARDWIDTH, YACTIVE+CARDHEIGHT, ROUGE);
-            textprintf_ex(rep, font, i*(CARDWIDTH+MARGIN) + XACTIVE, YACTIVE + MARGIN, NOIR, -1, " HP: %d", m_Active[i]->GetHP());
-            textprintf_ex(rep, font, i*(CARDWIDTH+MARGIN) + XACTIVE, YACTIVE + 2*MARGIN, NOIR, -1, " AD: %d", m_Active[i]->GetAD());
+
+            draw_sprite(rep, sprites.cardTemplate, x, y);
+
+            rectfill(rep, x + XDESCRI, y + YDESCRI, x + XDESCRI + WDESCRI, y + YDESCRI + HDESCRI, ROUGE);
+
+            textprintf_ex(rep, font, x + XTEXT, y + 1, NOIR, -1, " %dHP", m_Active[i]->GetHP());
+            textprintf_ex(rep, font, x + XTEXT, y + YACTION + 5, NOIR, -1, "%dDMG", m_Active[i]->GetAD());
         }
     }
 
+    //face de la carte + infos
     for (int i=0;i<MAXSPECIAL;i++)
     {
         rect(rep, i*(CARDWIDTH+MARGIN) + XSPECIAL, YSPECIAL, i*(CARDWIDTH+MARGIN) + XSPECIAL+CARDWIDTH, YSPECIAL+CARDHEIGHT, BLEU);
@@ -442,14 +462,17 @@ void Player::Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerI
             rectfill(rep, i*(CARDWIDTH+MARGIN) + XSPECIAL, YSPECIAL, i*(CARDWIDTH+MARGIN) + XSPECIAL+CARDWIDTH, YSPECIAL+CARDHEIGHT, BLEU);
     }
 
+    //carte face cachée
     rect(rep, XENJEU, YENJEU, XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
     if (m_Enjeu)
-        rectfill(rep, XENJEU, YENJEU, XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
+        draw_sprite(rep, sprites.cardBack, XENJEU, YENJEU); //rectfill(rep, XENJEU, YENJEU, XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
 
+    //carte face cachée
     rect(rep, XPIOCHE, YPIOCHE, XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
     if (!m_Deck.empty())
-        rectfill(rep, XPIOCHE, YPIOCHE, XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
+        draw_sprite(rep, sprites.cardBack, XPIOCHE, YPIOCHE); //rectfill(rep, XPIOCHE, YPIOCHE, XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
 
+    //face de la carte en haut de la pile + infos
     rect(rep, XCIMETIERE, YCIMETIERE, XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);
     if (!m_Cimetiere.empty())
         rectfill(rep, XCIMETIERE, YCIMETIERE, XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);

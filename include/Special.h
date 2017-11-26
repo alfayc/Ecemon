@@ -10,11 +10,11 @@ class Player;
 class Special : public Carte
 {
     private:
+
+    protected:
         ModeleSpecial& m_Modele;
 
         int m_ActiveLeft;
-
-    protected:
 
     public:
         Special(ModeleSpecial& _Modele);
@@ -23,7 +23,8 @@ class Special : public Carte
         void StartTurn();
         void EndTurn(Player& ally, Player& enemy);
 
-        CardType GetCardType();
+        virtual CardType GetCardType();
+        virtual BITMAP *GetCardFront();
 
         int GetActiveLeft() { return m_ActiveLeft; }
 };

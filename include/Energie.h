@@ -10,15 +10,16 @@
 class Energie : public Carte
 {
     private:
-        ModeleEnergie& m_Modele;
 
     protected:
+        ModeleEnergie& m_Modele;
 
     public:
         Energie(ModeleEnergie& _Modele);
         virtual ~Energie();
 
-        CardType GetCardType();
+        virtual CardType GetCardType();
+        virtual BITMAP *GetCardFront();
 
         void Use(Domaines& where);
 };

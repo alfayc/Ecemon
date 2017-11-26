@@ -33,6 +33,12 @@
 #define PMAIN 7
 #define PPLAYER 8
 
+// enum pour les endroits sur une carte
+#define CDESCRI 1
+#define CACTION 2
+#define CATTACK1 2 ///À CHANGER?
+#define CATTACK2 3
+
 struct PlayerInput{
     bool whoTurn; //n'a rien à voir avec l'input, main un bon endroit pour la mettre
 
@@ -40,16 +46,18 @@ struct PlayerInput{
     bool dragging;
 
     //au début du clic
-    int startSide; //vaut 0 si c'est le coté haut (ennemi) et 1 si c'est en bas (le joueur en question)
+    int startSide;      //vaut 0 si c'est le coté haut (ennemi) et 1 si c'est en bas (le joueur en question)
     int startX, startY;
     int startType;
-    int startNum;
+    int startNum;       // que si clic sur active, special ou main
+    int startCWhere;    // que si clic sur active, special ou main
 
     //à la fin du clic
     int endSide; //vaut 0 si c'est le coté haut (ennemi) et 1 si c'est en bas (le joueur en question)
     int endX, endY;
     int endType;
-    int endNum;
+    int endNum;        // que si clic sur active, special ou main
+    int endCWhere;     // que si clic sur active, special ou main
 };
 
 struct Domaines{
@@ -67,8 +75,8 @@ struct Domaines{
 #define HPLAYERSIDE (YSCREEN/2)
 
 // les dimensions
-#define CARDWIDTH 70
-#define CARDHEIGHT 100
+#define CARDWIDTH 84
+#define CARDHEIGHT 120
 #define PDIST (CARDWIDTH + MARGIN)
 
 #define MARGIN 10
@@ -80,22 +88,38 @@ struct Domaines{
 #define YSPECIAL MARGIN
 #define XENJEU MARGIN
 #define YENJEU (CARDHEIGHT + 2*MARGIN)
-#define XPIOCHE ((PDIST*7 + 10)/2 - CARDWIDTH/2)
+#define XPIOCHE ((PDIST*7 + MARGIN)/2 - CARDWIDTH/2)
 #define YPIOCHE YENJEU
 #define XCIMETIERE XSPECIAL
 #define YCIMETIERE YENJEU
 #define XMAIN XACTIVE
 #define YMAIN (2*CARDHEIGHT + 3*MARGIN)
 
-#define XPLAYER XENDTURN
-#define YPLAYER (3*CARDHEIGHT + 5*MARGIN)
+#define XPLAYER (PDIST + 45)
+#define YPLAYER (YENJEU + MARGIN)
 #define WPLAYER WENDTURN
 #define HPLAYER HENDTURN
 
 #define XENDTURN (XSCREEN/2 - WENDTURN/2)
-#define YENDTURN (YSCREEN/2 -HENDTURN - MARGIN)
+#define YENDTURN (YSCREEN/2 - HENDTURN - MARGIN)
 #define WENDTURN 50
 #define HENDTURN 30
+
+
+//positions des differents trucs sur une carte
+#define XACTION 0
+#define YACTION 63
+#define WACTION 84
+#define HACTION 40
+#define HATTACK (HACTION/2)
+
+#define XDESCRI 0 //L'IMAGE
+#define YDESCRI 13
+#define WDESCRI 84
+#define HDESCRI 60
+
+#define XTEXT (28)
+
 
 ///COLORS
 // des couleurs
@@ -132,15 +156,19 @@ struct Domaines{
 
 #ifdef _WINDOWS
 
-#define FSOURIS "Res\\mario_mouse_cursor.bmp" //32x30
-#define FENDTURN "Res\\End_Turn_Button.bmp"   //50x30
-#define FPLAYER "Res\\Player_Button.bmp"   //50x30
+#define FSOURIS "Res\\mario_mouse_cursor.bmp"   //32x30
+#define FENDTURN "Res\\End_Turn_Button.bmp"     //50x30
+#define FPLAYER "Res\\Player_Button.bmp"        //50x30
+#define FCARDB "Res\\Card_Back.bmp"             //70x100
+#define FCARDT "Res\\Card_Template.bmp"         //70x100
 
 #else
 
-#define FSOURIS "Res/mario_mouse_cursor.bmp" //32x30
-#define FENDTURN "Res/End_Turn_Button.bmp"   //50x30
-#define FPLAYER "Res/Player_Button.bmp"   //50x30
+#define FSOURIS "Res/mario_mouse_cursor.bmp"    //32x30
+#define FENDTURN "Res/End_Turn_Button.bmp"      //50x30
+#define FPLAYER "Res/Player_Button.bmp"         //50x30
+#define FCARDB "Res/Card_Back.bmp"              //70x100
+#define FCARDT "Res/Card_Template.bmp"          //70x100
 
 #endif // WIN32
 
@@ -154,6 +182,8 @@ struct Sprites{
     BITMAP *souris;
     BITMAP *buttonEndTurn;
     BITMAP *buttonPlayer;
+    BITMAP *cardBack;
+    BITMAP *cardTemplate;
 };
 
 #endif //DEFINES_H_INCLUDED

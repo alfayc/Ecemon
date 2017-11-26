@@ -8,6 +8,8 @@
 class Creature : public Carte
 {
     private:
+
+    protected:
         ModeleCreature& m_Modele;
         int m_HP;
         int m_AD;
@@ -15,13 +17,14 @@ class Creature : public Carte
         bool m_Attack;
         int m_Cible; //le numéro de la carte ennemie à attaquer. -1 si c'est directement le joueur
 
-    protected:
+        BITMAP *m_Front;
 
     public:
         Creature(ModeleCreature& _Modele);
         virtual ~Creature();
 
-        CardType GetCardType();
+        virtual CardType GetCardType();
+        virtual BITMAP *GetCardFront();
 
         void SetAttack(int who);
         virtual int TakeDamage(int quant);

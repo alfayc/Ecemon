@@ -33,7 +33,9 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
+			<Add option="-Wextra -Wno-sign-compare" />
 		</Compiler>
 		<Linker>
 			<Add library="alleg" />

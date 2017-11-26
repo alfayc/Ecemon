@@ -18,6 +18,11 @@ CardType Energie::GetCardType()
     return ENERGIE;
 }
 
+BITMAP *Energie::GetCardFront()
+{
+    return nullptr;
+}
+
 void Energie::Use(Domaines& where)
 {
     where.value[m_Modele.GetDomaine()] += m_Modele.GetEnergy();

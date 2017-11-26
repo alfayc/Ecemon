@@ -64,6 +64,8 @@ void load_sprites(Sprites& sprites)
     sprites.souris = load_bitmap(FSOURIS, nullptr);ERR_CHARG(sprites.souris)
     sprites.buttonEndTurn = load_bitmap(FENDTURN, nullptr);ERR_CHARG(sprites.buttonEndTurn)
     sprites.buttonPlayer= load_bitmap(FPLAYER, nullptr);ERR_CHARG(sprites.buttonPlayer)
+    sprites.cardBack = load_bitmap(FCARDB, NULL); ERR_CHARG(sprites.cardBack)
+    sprites.cardTemplate = load_bitmap(FCARDT, NULL); ERR_CHARG(sprites.cardTemplate)
 }
 
 //initialisation de allegro
