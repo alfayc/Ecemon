@@ -16,7 +16,7 @@ TODO:
  
 Dans le CDC de base:
 
-- [ ] 4 domaines (types d'énergies...)
+- [X] 4 domaines (types d'énergies...)
 - [ ] 4 modèles de cartes énergie (une par domaine au moins)
 - [ ] 5 modèles de cartes créatures avec chacune au moins 2 attaques
 - [ ] 6 modèles de cartes spéciales permettant d'altérer les mécanismes par défaut du jeu
