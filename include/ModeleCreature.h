@@ -12,6 +12,8 @@ class ModeleCreature
         std::string m_Nom;
         std::string m_Description;
 
+        BITMAP *m_CardFront;
+
     protected:
 
     public:
@@ -27,6 +29,8 @@ class ModeleCreature
         void SetHP(int val) { m_HP = val; }
         int GetAD() { return m_AD; }
         void SetAD(int val) { m_AD = val; }
+        BITMAP *GetCardFront() { return m_CardFront; }
+
 };
 
 #endif // MODELECREATURE_H

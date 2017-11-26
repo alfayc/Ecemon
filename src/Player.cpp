@@ -187,7 +187,6 @@ bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
     return false;
 }
 
-
 bool Player::InputCheck(PlayerInput& p_input)
 {
     bool rep = false;
@@ -414,6 +413,7 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
     p_input.dragging = false;
 }
 
+//pourrait etre plus DRY mais bon
 void Player::Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerInput& p_input)
 {
     int col = 0;
@@ -425,57 +425,67 @@ void Player::Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerI
     x = XENERGY;//pour être dans le réfferentiel de la carte
     y = YENERGY;
     //la face de la carte en haut + infos
-    rect(rep, x, y, x+CARDWIDTH, y+CARDHEIGHT, NOIR);
+    rect(rep, x-1, y-1, x+CARDWIDTH, y+CARDHEIGHT, NOIR);
     if (!m_Energie.empty())
     {
-
-        draw_sprite(rep, sprites.cardTemplate, x, y);
-
-        rectfill(rep, x + XDESCRI, y + YDESCRI, x + XDESCRI + WDESCRI, y + YDESCRI + HDESCRI, NOIR);
-
+        draw_sprite(rep, m_Energie.top()->GetCardFront(), x, y);
     }
 
     //face de la carte + infos
     for (int i=0;i<MAXACTIVE;i++)
     {
-        int x = XACTIVE + i*(CARDWIDTH+MARGIN), y = YACTIVE; //pour être dans le réfferentiel de la carte
+        x = XACTIVE + i*(CARDWIDTH+MARGIN); //pour être dans le réfferentiel de la carte
+        y = YACTIVE;
 
         rect(rep, x - 1 , y - 1, x + CARDWIDTH, y + CARDHEIGHT, ROUGE);
 
         if (m_Active[i])
         {
 
-            draw_sprite(rep, sprites.cardTemplate, x, y);
-
-            rectfill(rep, x + XDESCRI, y + YDESCRI, x + XDESCRI + WDESCRI, y + YDESCRI + HDESCRI, ROUGE);
+            draw_sprite(rep, m_Active[i]->GetCardFront(), x, y);
 
             textprintf_ex(rep, font, x + XTEXT, y + 1, NOIR, -1, " %dHP", m_Active[i]->GetHP());
-            textprintf_ex(rep, font, x + XTEXT, y + YACTION + 5, NOIR, -1, "%dDMG", m_Active[i]->GetAD());
+            //textprintf_ex(rep, font, x + XTEXT + 4, y + YACTION + 6, NOIR, -1, "%dDMG", m_Active[i]->GetAD());
         }
     }
 
     //face de la carte + infos
     for (int i=0;i<MAXSPECIAL;i++)
     {
-        rect(rep, i*(CARDWIDTH+MARGIN) + XSPECIAL, YSPECIAL, i*(CARDWIDTH+MARGIN) + XSPECIAL+CARDWIDTH, YSPECIAL+CARDHEIGHT, BLEU);
+        x = XSPECIAL + i*(CARDWIDTH+MARGIN);//pour être dans le réfferentiel de la carte
+        y = YSPECIAL;
+
+        rect(rep, x-1, y-1, x+CARDWIDTH, y+CARDHEIGHT, BLEU);
         if (m_Special[i])
-            rectfill(rep, i*(CARDWIDTH+MARGIN) + XSPECIAL, YSPECIAL, i*(CARDWIDTH+MARGIN) + XSPECIAL+CARDWIDTH, YSPECIAL+CARDHEIGHT, BLEU);
+        {
+            draw_sprite(rep, m_Special[i]->GetCardFront(), x, y);
+
+            textprintf_ex(rep, font, x + XTEXT-7, y + 1, NOIR, -1, " %dturns", m_Special[i]->GetActiveLeft());
+        }
     }
 
+    x = XENJEU;//pour être dans le réfferentiel de la carte
+    y = YENJEU;
     //carte face cachée
-    rect(rep, XENJEU, YENJEU, XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
+    rect(rep, x-1, y-1, x+CARDWIDTH, y+CARDHEIGHT, VERT);
     if (m_Enjeu)
-        draw_sprite(rep, sprites.cardBack, XENJEU, YENJEU); //rectfill(rep, XENJEU, YENJEU, XENJEU+CARDWIDTH, YENJEU+CARDHEIGHT, VERT);
+        draw_sprite(rep, sprites.cardBack, x, y); //rectfill(rep, x, y, x+CARDWIDTH, y+CARDHEIGHT, VERT);
 
+    x = XPIOCHE;//pour être dans le réfferentiel de la carte
+    y = YPIOCHE;
     //carte face cachée
-    rect(rep, XPIOCHE, YPIOCHE, XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
+    rect(rep, x-1, y-1, x+CARDWIDTH, y+CARDHEIGHT, MAG);
     if (!m_Deck.empty())
-        draw_sprite(rep, sprites.cardBack, XPIOCHE, YPIOCHE); //rectfill(rep, XPIOCHE, YPIOCHE, XPIOCHE+CARDWIDTH, YPIOCHE+CARDHEIGHT, MAG);
+        draw_sprite(rep, sprites.cardBack, x, y); //rectfill(rep, x, y, x+CARDWIDTH, y+CARDHEIGHT, MAG);
 
+    x = XCIMETIERE;//pour être dans le réfferentiel de la carte
+    y = YCIMETIERE;
     //face de la carte en haut de la pile + infos
-    rect(rep, XCIMETIERE, YCIMETIERE, XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);
+    rect(rep, x-1, y-1, x+CARDWIDTH, y+CARDHEIGHT, COL_SAND);
     if (!m_Cimetiere.empty())
-        rectfill(rep, XCIMETIERE, YCIMETIERE, XCIMETIERE+CARDWIDTH, YCIMETIERE+CARDHEIGHT, COL_SAND);
+    {
+        draw_sprite(rep, m_Cimetiere.top()->GetCardFront(), x, y);
+    }
 
     rectfill(rep, XPLAYER, YPLAYER, XPLAYER+WPLAYER-1, YPLAYER+HPLAYER-1, (p_input.whoTurn^turn)?COL_P1_FOND:COL_P2_FOND);
     draw_sprite(rep, sprites.buttonPlayer, XPLAYER, YPLAYER);

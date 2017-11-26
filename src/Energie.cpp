@@ -20,7 +20,7 @@ CardType Energie::GetCardType()
 
 BITMAP *Energie::GetCardFront()
 {
-    return nullptr;
+    return m_Modele.GetCardFront();
 }
 
 void Energie::Use(Domaines& where)

@@ -5,7 +5,7 @@
 Special::Special(ModeleSpecial& _Modele)
     :m_Modele(_Modele)
 {
-
+    m_ActiveLeft = m_Modele.GetActiveLeft();
 }
 
 Special::~Special()
@@ -20,7 +20,7 @@ CardType Special::GetCardType()
 
 BITMAP *Special::GetCardFront()
 {
-    return nullptr;
+    return m_Modele.GetCardFront();
 }
 
 void Special::StartTurn()

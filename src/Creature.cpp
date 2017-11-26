@@ -23,7 +23,7 @@ CardType Creature::GetCardType()
 
 BITMAP *Creature::GetCardFront()
 {
-    return nullptr;
+    return m_Modele.GetCardFront();
 }
 
 void Creature::SetAttack(int who)

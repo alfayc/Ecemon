@@ -11,6 +11,8 @@ class ModeleEnergie
         int m_Domaine;
         std::string m_Description;
 
+        BITMAP *m_CardFront;
+
     protected:
 
     public:
@@ -25,6 +27,8 @@ class ModeleEnergie
         void SetDomaine(int val) { m_Domaine = val; }
         std::string GetDescription() { return m_Description; }
         void SetDescription(std::string val) { m_Description = val; }
+        BITMAP *GetCardFront() { return m_CardFront; }
+
 };
 
 #endif // MODELEENERGIE_H

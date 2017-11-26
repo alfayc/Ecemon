@@ -108,17 +108,17 @@ struct Domaines{
 
 //positions des differents trucs sur une carte
 #define XACTION 0
-#define YACTION 63
+#define YACTION 80
 #define WACTION 84
 #define HACTION 40
 #define HATTACK (HACTION/2)
 
 #define XDESCRI 0 //L'IMAGE
-#define YDESCRI 13
+#define YDESCRI 12
 #define WDESCRI 84
-#define HDESCRI 60
+#define HDESCRI 68
 
-#define XTEXT (28)
+#define XTEXT (37)
 
 
 ///COLORS
