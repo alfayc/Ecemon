@@ -6,14 +6,15 @@
 class ModeleEnergie
 {
     private:
-        std::string m_Nom;
-        int m_Energy;
-        int m_Domaine;
-        std::string m_Description;
-
-        BITMAP *m_CardFront;
 
     protected:
+        int m_CardNum;
+        std::string m_Nom;
+        std::string m_Description;
+        int m_Energy;
+        int m_Domaine;
+
+        BITMAP *m_CardFront;
 
     public:
         ModeleEnergie();

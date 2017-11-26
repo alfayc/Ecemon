@@ -2,43 +2,21 @@
 #define MODELECREATURE_H
 
 #include "defines.h"
+#include "Move.h"
 
-///ATTENTION L'implementation de ModeleCreature et Move ne sont pas dans les mêmes fichiers
-
-class Player;
-
-//la classe de l'attaque
-class Move
-{
-    private:
-
-    protected:
-        int m_Damage;
-
-    public:
-        Move();
-        Move(int _Damage);
-        virtual ~Move();
-
-        //who = -1 to attack the enemy player himself
-        virtual void Attack(Player& ally, Player& enemy, int who); //only attack the enemy, but if we decide to be vampiric....
-
-        int GetDamage() { return m_Damage; }
-};
 
 class ModeleCreature
 {
     private:
-
-    protected:
-        int m_CardNum; // le numéro de la carte (mario etc...)
+        int m_AD;
+        int m_HP;
         std::string m_Nom;
         std::string m_Description;
-
-        int m_HP;
-        Move m_Moves[MAXMOVES];
+        Move m_Moves[2]
 
         BITMAP *m_CardFront;
+
+    protected:
 
     public:
         ModeleCreature();
@@ -51,8 +29,9 @@ class ModeleCreature
         void SetDescription(std::string val) { m_Description = val; }
         int GetHP() { return m_HP; }
         void SetHP(int val) { m_HP = val; }
+        int GetAD() { return m_AD; }
+        void SetAD(int val) { m_AD = val; }
         BITMAP *GetCardFront() { return m_CardFront; }
-        const Move& GetMove(int num) { return m_Moves[num]; }
 
 };
 

@@ -12,10 +12,14 @@ class Creature : public Carte
     protected:
         ModeleCreature& m_Modele;
         int m_HP;
-        int m_AD;
+        Move m_Moves[MAXMOVES];
+
 
         bool m_Attack;
-        int m_Cible; //le numéro de la carte ennemie à attaquer. -1 si c'est directement le joueur
+        int m_Cible;        //le numéro de la carte ennemie à attaquer. -1 si c'est directement le joueur
+        int m_AttackMove;
+
+        int m_Frozen;       //le nombre de tours freezés restants
 
         BITMAP *m_Front;
 
@@ -26,12 +30,14 @@ class Creature : public Carte
         virtual CardType GetCardType();
         virtual BITMAP *GetCardFront();
 
-        void SetAttack(int who);
+        void SetAttack(int who, int _move);
         virtual int TakeDamage(int quant);
         virtual void EndTurn(Player& ally, Player& enemy);
 
         int GetHP() { return m_HP; }
-        int GetAD() { return m_AD; }
+        int GetAD(int num) { return m_Moves[num].GetDamage(); }
+        bool IsFrozen() { return (bool) m_Frozen; }
+        void AddFrozen(int quant);
 };
 
 #endif // CREATURE_H

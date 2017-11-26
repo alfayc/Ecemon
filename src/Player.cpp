@@ -100,7 +100,34 @@ void Player::StartTurn()
     }
 }
 
-bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
+int CardButtonCheck(int x, int y, int precision)
+{
+    if (x>=XDESCRI && x<(XDESCRI+WDESCRI) && y>=YDESCRI && y<(YDESCRI+HDESCRI))
+    {
+        return CDESCRI;
+    }
+
+    if (precision==PACTIVE || precision==PSPECIAL)
+    {
+        if (x>=XACTION && x<(XACTION+WACTION) && y>=YACTION && y<(YACTION+HACTION))
+        {
+            if (precision==PSPECIAL)
+                return CACTION;
+            else
+            {
+                if (y<(XACTION + HATTACK))
+                    return CATTACK1;
+                else
+                    return CATTACK2;
+            }
+        }
+    }
+
+    return CNOTHING;
+}
+
+//aurait pu être fait avec une classe bouton...
+bool ChoiceCheck(int& choiceType, int& choiceNum, int& side, int& cWhere)
 {
     int x = mouse_x - XPLAYERSIDE;
     int y = mouse_y;
@@ -116,7 +143,9 @@ bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
     }
 
     choiceNum = 0;
+    cWhere = -1;
 
+    //deprecated, but you never know...
     if (x<0 || x>=WPLAYERSIDE || y<0 || y>=HPLAYERSIDE)
         return false;
 
@@ -124,15 +153,16 @@ bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
     if (x>=XENERGY && x<XENERGY+CARDWIDTH && y>=YENERGY && y<YENERGY+CARDHEIGHT)
     {
         choiceType = PENERGY;
+        cWhere = CardButtonCheck(x-XENERGY, y-YENERGY, choiceType);
         return true;
     }
     else if (x>=XACTIVE && x<(XACTIVE + MAXACTIVE*PDIST) && y>=YACTIVE && y<(YACTIVE+CARDHEIGHT))
     {
-
         if ((x-XACTIVE)%PDIST < CARDWIDTH)
         {
             choiceType = PACTIVE;
             choiceNum = (int)((x-XACTIVE)/PDIST);
+            cWhere = CardButtonCheck(x-XACTIVE - choiceNum*PDIST, y-YACTIVE, choiceType);
             return true;
         }
         else
@@ -140,11 +170,11 @@ bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
     }
     else if (x>=XSPECIAL && x<(XSPECIAL+MAXSPECIAL*PDIST) && y>=YSPECIAL && y<(YSPECIAL+CARDHEIGHT))
     {
-
         if ((x-XSPECIAL)%PDIST < CARDWIDTH)
         {
             choiceType = PSPECIAL;
             choiceNum = (int)((x-XSPECIAL)/PDIST);
+            cWhere = CardButtonCheck(x-XSPECIAL- choiceNum*PDIST, y-YSPECIAL, choiceType);
             return true;
         }
         else
@@ -163,6 +193,7 @@ bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
     else if (x>=XCIMETIERE && x<(XCIMETIERE+CARDWIDTH) && y>=YCIMETIERE && y<(YCIMETIERE+CARDHEIGHT))
     {
         choiceType = PCIMETIERE;
+        cWhere = CardButtonCheck(x-XCIMETIERE, y-YCIMETIERE, choiceType);
         return true;
     }
     else if (side && x>=XMAIN && x<(XMAIN+MAXHAND*PDIST) && y>=YMAIN && y<(YMAIN+CARDHEIGHT))
@@ -172,6 +203,7 @@ bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
         {
             choiceType = PMAIN;
             choiceNum = (int)((x-XMAIN)/PDIST);
+            cWhere = CardButtonCheck(x-XMAIN - choiceNum*PDIST, y-YMAIN, choiceType);
             return true;
         }
         else
@@ -182,7 +214,6 @@ bool ChoiceCheck(int& choiceType, int& choiceNum, int& side)
         choiceType = PPLAYER;
         return true;
     }
-
 
     return false;
 }
@@ -196,7 +227,7 @@ bool Player::InputCheck(PlayerInput& p_input)
         if (!p_input.prevClick)
         {
             int choiceType, choiceNum;
-            if (ChoiceCheck(choiceType, choiceNum, p_input.startSide)) //blindage QUE pour les cartes qui existent
+            if (ChoiceCheck(choiceType, choiceNum, p_input.startSide, p_input.startCWhere)) //blindage QUE pour les cartes qui existent
             {
 
                 bool couldClick = false;
@@ -245,13 +276,10 @@ bool Player::InputCheck(PlayerInput& p_input)
         {
             p_input.dragging = false;
 
-            int choiceType, choiceNum;
-            if (ChoiceCheck(choiceType, choiceNum, p_input.endSide)) // on blinde PAS les qui existent/n'existent pas
+            if (ChoiceCheck(p_input.endType, p_input.endNum, p_input.endSide, p_input.endCWhere)) // on blinde PAS les qui existent/n'existent pas
             {
                 rep = true;
 
-                p_input.endType = choiceType;
-                p_input.endNum = choiceNum;
                 p_input.endX = mouse_x;
                 p_input.endY = mouse_y;
 
@@ -261,6 +289,14 @@ bool Player::InputCheck(PlayerInput& p_input)
         p_input.prevClick = false;
     }
     return rep;
+}
+
+bool Clicked(const PlayerInput& p_input)
+{
+    return (p_input.endCWhere==p_input.startCWhere
+            && p_input.endNum==p_input.startNum
+            && p_input.endSide==p_input.startSide
+            && p_input.endType==p_input.startType);
 }
 
 ///contient la boucle evennementielle
@@ -297,7 +333,11 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
 
         if (InputCheck(p_input))
         {
-            if (p_input.startSide)
+            if (p_input.endCWhere==CDESCRI && Clicked(p_input)) //click sur la description
+            {
+                ///ADD THE DECRIPTION FUNCTION HERE
+            }
+            else if (p_input.startSide)
             {
                 switch (p_input.startType)
                 {
@@ -310,21 +350,22 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
                 break;
 
                     case PACTIVE:
-//                    if (!m_Active[p_input.endNum]) //on blinde si la carte n'éxistait pas
+//                    if (!m_Active[p_input.endNum]) //on blinde si la carte n'éxistait pas // mais c'est déjà blindé
 //                        break;
 
-                    if (!p_input.endSide) //si on lache le drag dans le camp adversaire
+                                //si on lache le drag dans le camp adversaire et qu'on avait séléctionné une attaque
+                    if (!p_input.endSide && (p_input.startCWhere==CATTACK1 || p_input.startCWhere==CATTACK2))
                     {
                         if (p_input.endType==PACTIVE)
                         {
                             if (opponent.GetActive(p_input.endNum))
                             {
-                                this->m_Active[p_input.startNum]->SetAttack(p_input.endNum);
+                                this->m_Active[p_input.startNum]->SetAttack(p_input.endNum, p_input.startCWhere);
                             }
                         }
                         else if (p_input.endType==PPLAYER)
                         {
-                            this->m_Active[p_input.startNum]->SetAttack(-1);//on lui dit d'attaquer le joueur ennemi
+                            this->m_Active[p_input.startNum]->SetAttack(-1, p_input.startCWhere);//on lui dit d'attaquer le joueur ennemi
                         }
                     }
                     else// si on lache le drag dans le camp allié
@@ -441,6 +482,8 @@ void Player::Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerI
 
         if (m_Active[i])
         {
+            if (m_Active[i]->IsFrozen()) // si la carte est freeze on change la couleur du contour
+                rect(rep, x - 1 , y - 1, x + CARDWIDTH, y + CARDHEIGHT, COL_UI_ACC);
 
             draw_sprite(rep, m_Active[i]->GetCardFront(), x, y);
 
@@ -545,6 +588,32 @@ void Player::TakeDamage(int quant)
 void Player::ResetHP()
 {
     m_HP = m_MaxHP;
+}
+
+
+bool Player::GetDead()
+{
+    if (m_HP<=0)
+        return true;
+
+    if (!m_Main.empty())
+        return false;
+    if (!m_Deck.empty())
+        return false;
+
+    for (int i=0;i<MAXACTIVE;i++)
+    {
+        if (m_Active[i])
+            return false;
+    }
+
+    for (int i=0;i<MAXSPECIAL;i++)
+    {
+        if (m_Special[i])
+            return false;
+    }
+
+    return true;
 }
 
 

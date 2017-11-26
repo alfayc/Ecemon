@@ -44,16 +44,13 @@ int main()
 
             players[i].EndTurn(players[!i]);
 
-            if (!players[0].GetHP() || !players[1].GetHP())
+            if (players[0].GetDead() || players[1].GetDead())
             {
                 endGame = true;
                 cout << endl << "partie terminée!!" << endl;
             }
         }
-
     }
-
-
 
     return 0;
 }

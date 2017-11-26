@@ -3,17 +3,17 @@
 
 #include "defines.h"
 
-
 class ModeleSpecial
 {
     private:
+
+    protected:
+        int m_CardNum;
         std::string m_Nom;
         std::string m_Description;
         int m_ActiveLeft;
 
         BITMAP *m_CardFront;
-
-    protected:
 
     public:
         ModeleSpecial();

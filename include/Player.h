@@ -41,7 +41,7 @@ class Player
         void TakeDamage(int quant);
 
         //accesseurs "utiles"/"necessaires"
-        int GetHP() { return m_HP; }
+        bool GetDead();
         void ResetHP();
         //void PlaceEnjeu();
 
@@ -61,6 +61,7 @@ class Player
         Carte* GetExclusive() { return m_Exclusive; }
         void SetExclusive(Carte* val) { m_Exclusive = val; }
         Creature* GetActive(int num) { return m_Active[num]; }
+        int GetHP() { return m_HP; }
 };
 
 #endif // PLAYER_H_INCLUDED

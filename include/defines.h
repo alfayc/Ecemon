@@ -10,15 +10,13 @@
 #include <queue>
 
 #include "Carte.h"
-#include "ModeleCreature.h"
-#include "ModeleEnergie.h"
-#include "ModeleSpecial.h"
 
 ///MAGIC NUMBERS AND ENUMS
 // le nombre max de cartes dans les differents endroits du plateau
 #define MAXHAND 5
 #define MAXACTIVE 5
 #define MAXSPECIAL 1
+#define MAXMOVES 2 //le nombre d'attaques max par créature
 
 #define NBDOMAINE 4
 
@@ -34,10 +32,11 @@
 #define PPLAYER 8
 
 // enum pour les endroits sur une carte
-#define CDESCRI 1
-#define CACTION 2
-#define CATTACK1 2 ///À CHANGER?
-#define CATTACK2 3
+#define CNOTHING (-1)   //parentheses on sait jamais
+#define CACTION 0
+#define CATTACK1 0
+#define CATTACK2 1
+#define CDESCRI 2
 
 struct PlayerInput{
     bool whoTurn; //n'a rien à voir avec l'input, main un bon endroit pour la mettre
@@ -50,14 +49,14 @@ struct PlayerInput{
     int startX, startY;
     int startType;
     int startNum;       // que si clic sur active, special ou main
-    int startCWhere;    // que si clic sur active, special ou main
+    int startCWhere;    // que si clic sur une carte de face
 
     //à la fin du clic
     int endSide; //vaut 0 si c'est le coté haut (ennemi) et 1 si c'est en bas (le joueur en question)
     int endX, endY;
     int endType;
     int endNum;        // que si clic sur active, special ou main
-    int endCWhere;     // que si clic sur active, special ou main
+    int endCWhere;     // que si clic sur une carte de face
 };
 
 struct Domaines{
@@ -118,7 +117,7 @@ struct Domaines{
 #define WDESCRI 84
 #define HDESCRI 68
 
-#define XTEXT (37)
+#define XTEXT 37
 
 
 ///COLORS
@@ -137,7 +136,7 @@ struct Domaines{
 
 /// ces couleurs sont celles qu'on utilisait dans le projet ECEcraft. Quand besoin on peut les réutiliser
 //#define COL_UI_FOND makecol(1,87,155)
-//#define COL_UI_ACC makecol(79,195,247)
+#define COL_UI_ACC makecol(79,195,247)  //un joli bleu clair (je crois)
 #define COL_SAND makecol(194,132,80)
 //#define COL_BRIDGE makecol(122,61,0)
 //#define COL_GRASS makecol(110,130,51)
