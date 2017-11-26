@@ -13,6 +13,7 @@ TODO:
 - [ ] Chargement/sauvegarde fichier (cartes, joueur, partie)
     * Cartes
     * Joueur
+- [] fonction pour la description d'une carte
  
 Dans le CDC de base:
 
