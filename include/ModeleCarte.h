@@ -10,7 +10,9 @@ class ModeleCarte
     private:
 
     protected:
+        /* le numéro de la carte (dans la map) */
         int m_CardNum;
+
         std::string m_Nom;
         std::string m_Description;
         BITMAP *m_CardFront;

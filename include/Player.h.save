@@ -22,8 +22,7 @@ class Player
         int m_HP;
         int m_MaxHP;
 
-        /* une fonction pour voir l'action du joueur. */
-        bool InputCheck(PlayerInput& p_input);
+        bool InputCheck(PlayerInput& p_input); //une fonction pour voir l'action du joueur. utilisée dans 
 
     protected:
 
@@ -31,37 +30,24 @@ class Player
         Player();
         virtual ~Player();
 
-        /* dessine un demi écran pour le joueur en cours.
-        turn est vraie si c'est au tour de ce joueur */
+        //turn est vraie si c'est au tour de ce joueur
         void Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerInput& p_input); //affiche les cartes sur la bitmap en paramètre
-
-        /* Fait toutes les actions à faire après que le joueur ait joué */
         void EndTurn(Player& enemy);
-
-        /* Fait toutes les actions à faire avant que le joueur ait joué */
         void StartTurn();
+        void Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, PlayerInput& p_input); //là où y'a la boucle evennementielle
 
-        /* La boucle évennementielle. effectue aussi les action à partir de ce que le joueur choisit */
-        void Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, PlayerInput& p_input);
-
-        /* Pour recevoir des degats */
         void TakeDamage(int quant);
 
         //accesseurs "utiles"/"necessaires"
-        /* revoie true si le joueur a perdu */
         bool GetDead();
-
-        /* remet à MaxHP l'HP du joueur */
         void ResetHP();
-
-        /* prend une carte du deck/collection et la met dans l'enjeu */
         //void PlaceEnjeu();
 
         //getters/setters
         std::string GetNom() { return m_Nom; }
         void SetNom(std::string val) { m_Nom = val; }
-        Collection GetCollection() { return m_Collection; }
-        void SetCollection(Collection val) { m_Collection = val; }
+        std::vector<Carte*> GetCollection() { return m_Collection; }
+        void SetCollection(std::vector<Carte*> val) { m_Collection = val; }
         std::queue<Carte*> GetDeck() { return m_Deck; }
         void SetDeck(std::queue<Carte*> val) { m_Deck = val; }
         std::stack<Carte*> GetCimetiere() { return m_Cimetiere; }

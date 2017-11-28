@@ -8,7 +8,7 @@
 
 class Player;
 
-//la classe de l'attaque
+/* la classe de l'action d'une créature (généralement une attaque) */
 class Move
 {
     private:
@@ -21,9 +21,11 @@ class Move
         Move(int _Damage);
         virtual ~Move();
 
-        //who = -1 to attack the enemy player himself
-        virtual void Attack(Player& ally, Player& enemy, int who); //only attack the enemy, but if we decide to be vampiric....
+        /* who = -1 to attack the enemy player himself
+        pas nécéssaire de passer l'allié en paramètre mais si jamais on décide de faire une classe fille vampirique...*/
+        virtual void Attack(Player& ally, Player& enemy, int who);
 
+        //accesseur
         int GetDamage() { return m_Damage; }
 };
 
@@ -36,10 +38,11 @@ class ModeleCreature : public ModeleCarte
         Move m_Moves[MAXMOVES];
 
     public:
-        ModeleCreature();
-        ModeleCreature(int a);
+        ModeleCreature();       ///LES CONSTRUCTEURS DE TOUTES LES CARTES RESTENT À FAIRE
+        ModeleCreature(int a);  //pour instacier une carte.
         virtual ~ModeleCreature();
 
+        //accesseurs
         int GetHP() { return m_HP; }
         void SetHP(int val) { m_HP = val; }
         BITMAP *GetCardFront() { return m_CardFront; }

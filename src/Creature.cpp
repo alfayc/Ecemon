@@ -67,7 +67,10 @@ int Creature::TakeDamage(int quant)
 void Creature::EndTurn(Player& ally, Player& enemy)
 {
     if (m_Frozen>0)
+    {
         m_Frozen--;
+        return;
+    }
 
     if (m_Attack)
     {

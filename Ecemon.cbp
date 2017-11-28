@@ -41,8 +41,10 @@
 			<Add library="alleg" />
 		</Linker>
 		<Unit filename="include/Carte.h" />
+		<Unit filename="include/Collection.h" />
 		<Unit filename="include/Creature.h" />
 		<Unit filename="include/Energie.h" />
+		<Unit filename="include/ModeleCarte.h" />
 		<Unit filename="include/ModeleCreature.h" />
 		<Unit filename="include/ModeleEnergie.h" />
 		<Unit filename="include/ModeleSpecial.h" />
@@ -51,8 +53,10 @@
 		<Unit filename="include/defines.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Carte.cpp" />
+		<Unit filename="src/Collection.cpp" />
 		<Unit filename="src/Creature.cpp" />
 		<Unit filename="src/Energie.cpp" />
+		<Unit filename="src/ModeleCarte.cpp" />
 		<Unit filename="src/ModeleCreature.cpp" />
 		<Unit filename="src/ModeleEnergie.cpp" />
 		<Unit filename="src/ModeleSpecial.cpp" />

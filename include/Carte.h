@@ -22,7 +22,10 @@ class Carte
         Carte();
         virtual ~Carte();
 
+        /* renvoie le type de carte (creature, energie, special */
         virtual CardType GetCardType() = 0;
+
+        /* renvoie la face de la carte*/
         virtual BITMAP *GetCardFront() = 0;
 };
 
