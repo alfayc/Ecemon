@@ -1,90 +1,170 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
-	<ActiveTarget name="Release" />
-	<File name="src/ModeleSpecial.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="162" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include/Carte.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="68" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src/Creature.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="389" topLine="18" />
-		</Cursor>
-	</File>
-	<File name="include/ModeleEnergie.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="500" topLine="0" />
-		</Cursor>
-	</File>
+	<ActiveTarget name="Debug" />
 	<File name="src/ModeleEnergie.cpp" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4" topLine="0" />
+			<Cursor1 position="105" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/ModeleCreature.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/Special.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="145" topLine="0" />
+			<Cursor1 position="240" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src/Special.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="367" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src/Player.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="12341" topLine="407" />
+			<Cursor1 position="1028" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="include/Player.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1487" topLine="18" />
+			<Cursor1 position="1686" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/Energie.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/Move.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="159" topLine="0" />
+			<Cursor1 position="81" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/defines.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/ModeleSpecial.h" open="1" top="1" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="650" topLine="0" />
+			<Cursor1 position="334" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/Creature.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/ModeleEnergie.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="246" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include/Special.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="433" topLine="0" />
+			<Cursor1 position="228" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src/ModeleCreature.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="275" topLine="0" />
+			<Cursor1 position="482" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include/ModeleSpecial.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/Creature.cpp" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="185" topLine="0" />
+			<Cursor1 position="835" topLine="6" />
 		</Cursor>
 	</File>
-	<File name="src/Energie.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/ModeleCreature.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="266" topLine="0" />
+			<Cursor1 position="764" topLine="9" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/Special.cpp" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1246" topLine="19" />
+			<Cursor1 position="359" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/Carte.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="63" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/defines.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3588" topLine="105" />
+		</Cursor>
+	</File>
+	<File name="src/ModeleSpecial.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="221" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/Player.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="14227" topLine="33" />
+		</Cursor>
+		<Folding>
+			<Collapse line="6" />
+			<Collapse line="10" />
+			<Collapse line="15" />
+			<Collapse line="32" />
+			<Collapse line="38" />
+			<Collapse line="43" />
+			<Collapse line="47" />
+			<Collapse line="49" />
+			<Collapse line="57" />
+			<Collapse line="59" />
+			<Collapse line="67" />
+			<Collapse line="69" />
+			<Collapse line="75" />
+			<Collapse line="77" />
+			<Collapse line="81" />
+			<Collapse line="90" />
+			<Collapse line="92" />
+			<Collapse line="94" />
+			<Collapse line="103" />
+			<Collapse line="105" />
+			<Collapse line="110" />
+			<Collapse line="112" />
+			<Collapse line="116" />
+			<Collapse line="130" />
+			<Collapse line="135" />
+			<Collapse line="139" />
+			<Collapse line="153" />
+			<Collapse line="159" />
+			<Collapse line="161" />
+			<Collapse line="171" />
+			<Collapse line="173" />
+			<Collapse line="183" />
+			<Collapse line="188" />
+			<Collapse line="193" />
+			<Collapse line="199" />
+			<Collapse line="202" />
+			<Collapse line="212" />
+			<Collapse line="221" />
+			<Collapse line="225" />
+			<Collapse line="227" />
+			<Collapse line="230" />
+			<Collapse line="235" />
+			<Collapse line="261" />
+			<Collapse line="273" />
+			<Collapse line="275" />
+			<Collapse line="279" />
+			<Collapse line="294" />
+			<Collapse line="303" />
+			<Collapse line="309" />
+			<Collapse line="325" />
+			<Collapse line="327" />
+			<Collapse line="334" />
+			<Collapse line="336" />
+			<Collapse line="340" />
+			<Collapse line="342" />
+			<Collapse line="357" />
+			<Collapse line="359" />
+			<Collapse line="361" />
+			<Collapse line="366" />
+			<Collapse line="371" />
+			<Collapse line="373" />
+			<Collapse line="384" />
+			<Collapse line="386" />
+			<Collapse line="396" />
+			<Collapse line="400" />
+			<Collapse line="403" />
+			<Collapse line="412" />
+			<Collapse line="420" />
+		</Folding>
+	</File>
+	<File name="include/Carte.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="213" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/Creature.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="672" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/Energie.cpp" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="297" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/Energie.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="323" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

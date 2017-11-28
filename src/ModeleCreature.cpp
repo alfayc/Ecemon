@@ -13,8 +13,11 @@ ModeleCreature::ModeleCreature()
 }
 
 ModeleCreature::ModeleCreature(int a)
-    :m_Nom("premiere"), m_Description(""), m_HP(10)
+    :m_HP(10)
 {
+    m_Nom = "premiere";
+    m_Description = "";
+
     m_Moves[0] = Move(1);
     m_Moves[1] = Move(2);
 

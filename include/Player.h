@@ -2,9 +2,7 @@
 #define PLAYER_H_INCLUDED
 
 #include "defines.h"
-#include "Creature.h"
-#include "Energie.h"
-#include "Special.h"
+#include "Collection.h"
 
 class Player
 {

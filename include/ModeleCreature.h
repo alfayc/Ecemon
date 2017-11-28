@@ -2,6 +2,7 @@
 #define MODELECREATURE_H
 
 #include "defines.h"
+#include "ModeleCarte.h"
 
 ///ATTENTION L'implementation de ModeleCreature et Move ne sont pas dans les mêmes fichiers
 
@@ -26,29 +27,19 @@ class Move
         int GetDamage() { return m_Damage; }
 };
 
-class ModeleCreature
+class ModeleCreature : public ModeleCarte
 {
     private:
 
     protected:
-        int m_CardNum; // le numéro de la carte (mario etc...)
-        std::string m_Nom;
-        std::string m_Description;
-
         int m_HP;
         Move m_Moves[MAXMOVES];
-
-        BITMAP *m_CardFront;
 
     public:
         ModeleCreature();
         ModeleCreature(int a);
         virtual ~ModeleCreature();
 
-        std::string GetNom() { return m_Nom; }
-        void SetNom(std::string val) { m_Nom = val; }
-        std::string GetDescription() { return m_Description; }
-        void SetDescription(std::string val) { m_Description = val; }
         int GetHP() { return m_HP; }
         void SetHP(int val) { m_HP = val; }
         BITMAP *GetCardFront() { return m_CardFront; }

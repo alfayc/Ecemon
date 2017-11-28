@@ -16,14 +16,17 @@
 	<queue>
 	"Carte.h"
 
-1511724068 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleCreature.h
+1511862360 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleCreature.h
 	"defines.h"
+	"ModeleCarte.h"
 
-1511724012 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleEnergie.h
+1511862359 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleEnergie.h
 	"defines.h"
+	"ModeleCarte.h"
 
-1511724029 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleSpecial.h
+1511862357 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleSpecial.h
 	"defines.h"
+	"ModeleCarte.h"
 
 1511732402 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Creature.h
 	"defines.h"
@@ -53,7 +56,7 @@
 1511706238 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Energie.cpp
 	"Energie.h"
 
-1511732456 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/ModeleCreature.cpp
+1511862408 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/ModeleCreature.cpp
 	"ModeleCreature.h"
 
 1511706462 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/ModeleEnergie.cpp
@@ -66,11 +69,9 @@
 	"Special.h"
 	"Player.h"
 
-1511715150 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Player.h
+1511862646 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Player.h
 	"defines.h"
-	"Creature.h"
-	"Energie.h"
-	"Special.h"
+	"Collection.h"
 
 1511732344 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Player.cpp
 	"Player.h"
@@ -81,4 +82,16 @@
 1511717030 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Move.cpp
 	"ModeleCreature.h"
 	"Player.h"
+
+1511862508 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleCarte.h
+	"defines.h"
+
+1511862651 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Collection.h
+	"defines.h"
+	"Creature.h"
+	"Energie.h"
+	"Special.h"
+
+1511862238 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/ModeleCarte.cpp
+	"ModeleCarte.h"
 
