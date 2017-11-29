@@ -4,7 +4,6 @@
 
 #include "defines.h"
 
-
 class ModeleCarte
 {
     private:
@@ -20,6 +19,14 @@ class ModeleCarte
     public:
         ModeleCarte();
         virtual ~ModeleCarte();
+
+        /* écrit la carte dans un fichier */
+        virtual void Write_file(std::ofstream& fichier);
+
+        /* lit la carte dans un fichier
+        ON ASSUME QUE LE NUMÉRO DE LA CARTE A DÉJÀ ÉTÉ LU!!!*/
+        virtual void Read_file(std::ifstream& fichier);
+
 
         int GetCardNum() { return m_CardNum; }
         std::string GetNom() { return m_Nom; }

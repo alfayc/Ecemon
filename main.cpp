@@ -40,7 +40,10 @@ int main()
             players[i].Turn(players[!i], buffer, sprites, p_input);
 
             if (key[KEY_ESC])
+            {
+                cout << endl << "Pressed ESC!!!!!" << endl;
                 break;
+            }
 
             players[i].EndTurn(players[!i]);
 
@@ -48,6 +51,7 @@ int main()
             {
                 endGame = true;
                 cout << endl << "partie terminée!!" << endl;
+                break;
             }
         }
     }

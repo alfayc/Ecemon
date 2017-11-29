@@ -115,7 +115,7 @@ int CardButtonCheck(int x, int y, int precision)
                 return CACTION;
             else
             {
-                if (y<(XACTION + HATTACK))
+                if (y<(YACTION + HATTACK))
                     return CATTACK1;
                 else
                     return CATTACK2;
@@ -457,7 +457,6 @@ void Player::Turn(Player& opponent, BITMAP *buffer, const Sprites& sprites, Play
 //pourrait etre plus DRY mais bon
 void Player::Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerInput& p_input)
 {
-    int col = 0;
     BITMAP *rep = create_bitmap(dest->w, dest->h);
     rectfill(rep, 0, 0, dest->w, dest->h, BLANC);
 
@@ -539,24 +538,14 @@ void Player::Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerI
     {
         for (unsigned int i = 0;i<m_Main.size();i++) //m_Main est un vecteur (données contingues en mémoire)
         {
-            switch (m_Main.at(i)->GetCardType())
-            {
-                case ENERGIE:
-                col = NOIR;
-            break;
+            x = XMAIN + i*(CARDWIDTH+MARGIN);
+            y = YMAIN;
 
-                case CREATURE:
-                col = ROUGE;
-            break;
+            rect(rep, x-1, y-1, x+CARDWIDTH, y+CARDHEIGHT, COL_MOUNTAIN);
 
-                case SPECIAL:
-                col = BLEU;
-            break;
-            }
+            draw_sprite(rep, m_Main.at(i)->GetCardFront(), x, y);
 
-            rect(rep, i*(CARDWIDTH+MARGIN) + XMAIN, YMAIN, i*(CARDWIDTH+MARGIN) + XMAIN+CARDWIDTH, YMAIN+CARDHEIGHT, COL_MOUNTAIN);
-
-            rectfill(rep, i*(CARDWIDTH+MARGIN) + XMAIN + 1, YMAIN +1, i*(CARDWIDTH+MARGIN) + XMAIN+CARDWIDTH - 1, YMAIN+CARDHEIGHT - 1, col);
+            /// FAIRE LES HP ET NB RESTANT
         }
 
         if (p_input.dragging)

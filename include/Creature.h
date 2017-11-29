@@ -37,6 +37,8 @@ class Creature : public Carte
         //renvoie la face de la carte
         virtual BITMAP *GetCardFront();
 
+        virtual int GetCardNum() { return m_Modele.GetCardNum(); }
+
         /* fait attaquer à la fin du tour */
         virtual void SetAttack(int who, int _move);
         virtual int TakeDamage(int quant);

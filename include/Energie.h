@@ -19,6 +19,8 @@ class Energie : public Carte
         Energie(ModeleEnergie& _Modele);
         virtual ~Energie();
 
+        virtual int GetCardNum() { return m_Modele.GetCardNum(); }
+
         //renvoie le type de carte
         virtual CardType GetCardType();
         //renvoie la face de la carte

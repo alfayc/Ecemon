@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1511715405 source:/home/leonardo/Documents/Programmes/C++/Ecemon/main.cpp
+1511986514 source:/home/leonardo/Documents/Programmes/C++/Ecemon/main.cpp
 	"defines.h"
 	"Player.h"
 
@@ -7,17 +7,18 @@
 	<string>
 	<allegro.h>
 
-1511864381 /home/leonardo/Documents/Programmes/C++/Ecemon/include/defines.h
+1511883323 /home/leonardo/Documents/Programmes/C++/Ecemon/include/defines.h
 	<string>
 	<allegro.h>
 	<iostream>
+	<fstream>
 	<vector>
 	<stack>
 	<queue>
 	<map>
 	"Carte.h"
 
-1511865389 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleCreature.h
+1511882329 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleCreature.h
 	"defines.h"
 	"ModeleCarte.h"
 
@@ -29,25 +30,25 @@
 	"defines.h"
 	"ModeleCarte.h"
 
-1511865633 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Creature.h
+1511987639 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Creature.h
 	"defines.h"
 	"Carte.h"
 	"ModeleCreature.h"
 
-1511863987 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Carte.h
+1511987549 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Carte.h
 	"defines.h"
 
-1511865711 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Energie.h
+1511987536 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Energie.h
 	"defines.h"
 	"Carte.h"
 	"ModeleEnergie.h"
 
-1511865877 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Special.h
+1511987544 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Special.h
 	"defines.h"
 	"Carte.h"
 	"ModeleSpecial.h"
 
-1511697991 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Carte.cpp
+1511987577 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Carte.cpp
 	"Carte.h"
 
 1511864530 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Creature.cpp
@@ -74,7 +75,7 @@
 	"defines.h"
 	"Collection.h"
 
-1511732344 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Player.cpp
+1511987725 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Player.cpp
 	"Player.h"
 
 1511716992 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Move.h
@@ -84,7 +85,7 @@
 	"ModeleCreature.h"
 	"Player.h"
 
-1511866055 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleCarte.h
+1511883828 /home/leonardo/Documents/Programmes/C++/Ecemon/include/ModeleCarte.h
 	"defines.h"
 
 1511864414 /home/leonardo/Documents/Programmes/C++/Ecemon/include/Collection.h
@@ -93,7 +94,7 @@
 	"Energie.h"
 	"Special.h"
 
-1511862238 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/ModeleCarte.cpp
+1511883786 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/ModeleCarte.cpp
 	"ModeleCarte.h"
 
 1511862577 source:/home/leonardo/Documents/Programmes/C++/Ecemon/src/Collection.cpp
