@@ -4,7 +4,7 @@
 ###### autre montre un menu/sous menu
 ###### les choses avec des cases à cocher ne sont pas necessairement à faire par celui qui fait le menu
 
-#NE PAS FAIRE UNE FONCTION DIFFERENTE POUR CHAQUE MENU
+# NE PAS FAIRE UNE FONCTION DIFFERENTE POUR CHAQUE MENU
 Faire une fonction menu qui prend en parametre le numéro du menu ou qui a une autre façon de savoir quoi afficher et qui
 RENVOIE un entier/enum du choix du joueur.
 
@@ -27,4 +27,4 @@ cette fonction sera appellée le nombre de cartes dans un deck fois.
   - Retours au menu principal
 
 
-#####N'oubliez pas de destroy_bitmap à la fin des fonctions les bitmaps pour lesuqelles vous avez create_bitmap!!
+##### N'oubliez pas de destroy_bitmap à la fin des fonctions les bitmaps pour lesuqelles vous avez create_bitmap!!
