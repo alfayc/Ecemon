@@ -2,16 +2,18 @@
 #define DEFINES_H_INCLUDED
 
 ///LINKERS/INCLUDES
-#include <string>
 #include <allegro.h>
+#include <exception>
 #include <iostream>
 #include <fstream>
+#include <ostream>
+#include <istream>
 #include <vector>
+#include <string>
 #include <stack>
 #include <queue>
 #include <map>
 
-#include "Carte.h"
 
 ///MAGIC NUMBERS AND ENUMS
 // le nombre max de cartes dans les differents endroits du plateau
@@ -22,6 +24,11 @@
 
 #define NBDOMAINE 4
 
+enum CardType{
+    ENERGIE = 0,
+    CREATURE = 1,
+    SPECIAL = 2
+};
 
 // enum pour les endroits sur le plateau
 #define PENERGY 1
@@ -163,6 +170,9 @@ struct Domaines{
 #define FCARDB "Res\\Card_Back.bmp"             //70x100
 #define FCARDT "Res\\Card_Template.bmp"         //70x100
 
+#define FMODELES "Res\\Modeles.txt"              //contient les infos des cartes
+#define FPINFO "Res\\P_info.txt"                 //contient l'info des joueurs (les cartes, hp etc)
+
 #else
 
 #define FSOURIS "Res/mario_mouse_cursor.bmp"    //32x30
@@ -171,13 +181,16 @@ struct Domaines{
 #define FCARDB "Res/Card_Back.bmp"              //70x100
 #define FCARDT "Res/Card_Template.bmp"          //70x100
 
-#endif // WIN32
+#define FMODELES "Res/Modeles.txt"              //contient les infos des cartes
+#define FPINFO "Res/P_info.txt"                 //contient l'info des joueurs (les cartes, hp etc)
+
+#endif // _WINDOWS
 
 
 #define PRINT(x) {cout<<endl<<x<<endl;cout.flush();}
 
 // renvoie une erreur de chargement
-#define ERR_CHARG(x) {if(!x){allegro_message("probleme de chargement");exit(1);}}
+#define ERR_CHARG(x) {if(!x){cerr<<"probleme de chargement: " #x " \n";throw 1;}}
 
 struct Sprites{
     BITMAP *souris;

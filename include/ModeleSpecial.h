@@ -14,10 +14,22 @@ class ModeleSpecial : public ModeleCarte
 
     public:
         ModeleSpecial();
+        ModeleSpecial(int cardNum, std::istream& fichier);
         virtual ~ModeleSpecial();
 
-        /* à changer, mettre des start-turn? */
-        void Action();
+        void StartAction();
+
+        void EndAction();
+
+        /* écrit la carte dans un fichier. Ne servira à priori jamais */
+        virtual void Write_file(std::ostream& fichier);
+
+        /* lit la carte dans un fichier
+        ON ASSUME QUE LE NUMÉRO DE LA CARTE A DÉJÀ ÉTÉ LU!!!*/
+        virtual void Read_file(std::istream& fichier);
+
+        //renvoie le type de carte
+        virtual CardType GetCardType() { return SPECIAL; }
 
         int GetActiveLeft() { return m_ActiveLeft; }
         BITMAP *GetCardFront() { return m_CardFront; }

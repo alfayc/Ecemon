@@ -19,10 +19,6 @@ Creature::~Creature()
     //dtor
 }
 
-CardType Creature::GetCardType()
-{
-    return CREATURE;
-}
 
 BITMAP *Creature::GetCardFront()
 {
@@ -79,4 +75,15 @@ void Creature::EndTurn(Player& ally, Player& enemy)
         m_Attack = false;
     }
 }
+
+void Creature::Reset()
+{
+    m_HP = m_Modele.GetHP();
+    m_Attack = false;
+    m_Cible = 0;
+    m_AttackMove = 0;
+    m_Frozen = 0;
+}
+
+
 

@@ -13,10 +13,6 @@ Special::~Special()
     //dtor
 }
 
-CardType Special::GetCardType()
-{
-    return SPECIAL;
-}
 
 BITMAP *Special::GetCardFront()
 {
@@ -34,5 +30,10 @@ void Special::StartTurn()
 void Special::EndTurn(Player& ally, Player& enemy)
 {
     //l'action specifique à la carte
+}
+
+void Special::Reset()
+{
+    m_ActiveLeft = m_Modele.GetActiveLeft();
 }
 

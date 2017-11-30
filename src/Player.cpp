@@ -2,7 +2,29 @@
 
 using namespace std;
 
+//constructeur par défaud. ne pas l'utiliser
 Player::Player()
+    :m_HP(0), m_MaxHP(0)
+{
+    m_Enjeu = nullptr;
+
+    for (int i=0;i<MAXSPECIAL;i++)
+    {
+        m_Special[i] = nullptr;
+    }
+
+    for (int i=0;i<MAXACTIVE;i++)
+    {
+        m_Active[i] = nullptr;
+    }
+
+    for (int i=0;i<NBDOMAINE;i++)
+    {
+        m_CurrentEnergy.value[i] = 0;
+    }
+}
+
+Player::Player(map<int, ModeleCarte *> modeles)
     :m_HP(20), m_MaxHP(20)
 {
     m_Enjeu = nullptr;
@@ -17,17 +39,38 @@ Player::Player()
         m_Active[i] = nullptr;
     }
 
+///                     BAAAAAAAAAAAAAAAAAAAAAAAAAADDDDDDD
+    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
+    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
+    m_Deck.push(new Energie(*dynamic_cast<ModeleEnergie *>(modeles[2])));
+    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
+    m_Deck.push(new Special(*dynamic_cast<ModeleSpecial *>(modeles[1])));
+    m_Deck.push(new Special(*dynamic_cast<ModeleSpecial *>(modeles[1])));
+    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
+    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
 
-    m_Deck.push(new Creature(*(new ModeleCreature(0))));
-    m_Deck.push(new Creature(*(new ModeleCreature(0))));
-    m_Deck.push(new Energie(*(new ModeleEnergie)));
-    m_Deck.push(new Creature(*(new ModeleCreature(0))));
-    m_Deck.push(new Special(*(new ModeleSpecial)));
-    m_Deck.push(new Special(*(new ModeleSpecial)));
-    m_Deck.push(new Creature(*(new ModeleCreature(0))));
-    m_Deck.push(new Creature(*(new ModeleCreature(0))));
 
-    m_Exclusive = nullptr;
+    for (int i=0;i<NBDOMAINE;i++)
+    {
+        m_CurrentEnergy.value[i] = 0;
+    }
+}
+
+Player::Player(istream& fichier, map<int, ModeleCarte *> modeles)
+{
+    ReadFile(fichier, modeles);
+
+    m_HP = m_MaxHP;
+
+    for (int i=0;i<MAXSPECIAL;i++)
+    {
+        m_Special[i] = nullptr;
+    }
+
+    for (int i=0;i<MAXACTIVE;i++)
+    {
+        m_Active[i] = nullptr;
+    }
 
     for (int i=0;i<NBDOMAINE;i++)
     {
@@ -39,6 +82,33 @@ Player::~Player()
 {
     //dtor
 }
+
+
+void Player::WriteFile(ostream& fichier)
+{
+    fichier << endl  << m_Nom << endl;
+    fichier << m_MaxHP << endl;
+
+    m_Collection.WriteFile(fichier);
+}
+
+void Player::ReadFile(istream& fichier, map<int, ModeleCarte *> modeles)
+{
+    fichier.ignore(1, '\n');
+    getline(fichier, m_Nom);
+    fichier >> m_MaxHP;
+    m_HP = m_MaxHP;
+
+    try{
+        m_Collection.ReadFile(fichier, modeles);
+    }
+    catch (const out_of_range& e)
+    {
+        cerr << "for player " << m_Nom << endl;
+        throw e;
+    }
+}
+
 
 void Player::EndTurn(Player& enemy)
 {
@@ -574,9 +644,36 @@ void Player::TakeDamage(int quant)
         m_HP = 0;
 }
 
-void Player::ResetHP()
+void Player::Reset()
 {
     m_HP = m_MaxHP;
+
+    //on vide tout. les pointeurs sont conservés dans la colléction
+    while (!m_Deck.empty())
+        m_Deck.pop();
+
+    while (!m_Cimetiere.empty())
+        m_Cimetiere.pop();
+
+    m_Main.clear();
+
+    m_Enjeu = nullptr;
+
+    for (int i=0;i<MAXSPECIAL;i++)
+        m_Special[i] = nullptr;
+
+    for (int i=0;i<MAXACTIVE;i++)
+        m_Active[i] = nullptr;
+
+    while (!m_Energie.empty())
+        m_Energie.pop();
+
+    for (int i=0;i<NBDOMAINE;i++)
+    {
+        m_CurrentEnergy.value[i] = 0; //pourrait être changeable si peach pour le royaume champi par exemple
+    }
+
+    m_Collection.Reset();
 }
 
 

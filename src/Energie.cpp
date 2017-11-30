@@ -12,12 +12,6 @@ Energie::~Energie()
     //dtor
 }
 
-
-CardType Energie::GetCardType()
-{
-    return ENERGIE;
-}
-
 BITMAP *Energie::GetCardFront()
 {
     return m_Modele.GetCardFront();
@@ -26,5 +20,10 @@ BITMAP *Energie::GetCardFront()
 void Energie::Use(Domaines& where)
 {
     where.value[m_Modele.GetDomaine()] += m_Modele.GetEnergy();
+}
+
+void Energie::Reset()
+{
+    //nothing to do
 }
 

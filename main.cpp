@@ -11,6 +11,8 @@ using namespace std;
 //initialisation de allegro
 void init_alleg(int sizex, int sizey);
 void load_sprites(Sprites& sprites);
+void load_modeles(map<int, ModeleCarte*>& dest);
+void load_players(vector<Player *>& players, map<int, ModeleCarte *> modeles);
 
 int main()
 {
@@ -18,26 +20,36 @@ int main()
 
     BITMAP *buffer;
     Sprites sprites;
+    map<int, ModeleCarte *> modeles;
+    vector<Player *> playerList;
     PlayerInput p_input;
-    Player players[2];
+    Player *players[2];
     bool endGame = false;
 
-    p_input.dragging = false;
-    p_input.prevClick = false;
-
+    load_modeles(modeles);
     load_sprites(sprites);
 
     buffer = create_bitmap(XSCREEN, YSCREEN);
+
+    playerList.push_back(new Player(modeles));
+    playerList.push_back(new Player(modeles));
+
+    //préparation à la partie
+    players[0] = playerList.at(0);
+    players[1] = playerList.at(1);
+
+    p_input.dragging = false;
+    p_input.prevClick = false;
 
     while (!key[KEY_ESC] && !endGame)
     {
         for (int i=0;i<2;i++)
         {
-            players[i].StartTurn();
+            players[i]->StartTurn();
 
             p_input.whoTurn = i;
 
-            players[i].Turn(players[!i], buffer, sprites, p_input);
+            players[i]->Turn(*players[!i], buffer, sprites, p_input);
 
             if (key[KEY_ESC])
             {
@@ -45,9 +57,9 @@ int main()
                 break;
             }
 
-            players[i].EndTurn(players[!i]);
+            players[i]->EndTurn(*players[!i]);
 
-            if (players[0].GetDead() || players[1].GetDead())
+            if (players[0]->GetDead() || players[1]->GetDead())
             {
                 endGame = true;
                 cout << endl << "partie terminée!!" << endl;
@@ -55,6 +67,24 @@ int main()
             }
         }
     }
+
+
+    for (const auto& elem : modeles)
+    {
+        delete(elem.second);
+    }
+
+    ofstream pfichier(FPINFO, ios::out | ios::trunc);
+
+    pfichier << playerList.size() << endl;
+
+    for (const auto& elem : playerList)
+    {
+        elem->WriteFile(pfichier);
+        delete(elem);
+    }
+
+    pfichier.close();
 
     return 0;
 }
@@ -67,6 +97,78 @@ void load_sprites(Sprites& sprites)
     sprites.buttonPlayer= load_bitmap(FPLAYER, nullptr);ERR_CHARG(sprites.buttonPlayer)
     sprites.cardBack = load_bitmap(FCARDB, NULL); ERR_CHARG(sprites.cardBack)
     sprites.cardTemplate = load_bitmap(FCARDT, NULL); ERR_CHARG(sprites.cardTemplate)
+}
+
+void load_modeles(map<int, ModeleCarte*>& dest)
+{
+    ifstream fichier(FMODELES, ios::in); ERR_CHARG(fichier.is_open())
+
+    int nbModeles;
+
+    fichier >> nbModeles;
+
+    try{
+        for (int i=0;i<nbModeles;i++)
+        {
+            int currType;
+            int currNum; //le nuléro du modele de la carte
+
+            fichier >> currType;
+            fichier >> currNum;
+
+            switch ((CardType) currType)
+            {
+                case ENERGIE:
+                dest[currNum] = new ModeleEnergie(currNum, fichier);
+            break;
+
+                case CREATURE:
+                dest[currNum] = new ModeleCreature(currNum, fichier);
+            break;
+
+                case SPECIAL:
+                dest[currNum] = new ModeleSpecial(currNum, fichier);
+            break;
+            }
+        }
+    }
+    catch (const exception& e)
+    {
+        fichier.close();
+        throw e;
+    }
+    catch (int a)
+    {
+        fichier.close();
+        throw a;
+    }
+
+    fichier.close();
+}
+
+void load_players(vector<Player *>& players, map<int, ModeleCarte *> modeles)
+{
+    ifstream fichier(FPINFO, ios::in); ERR_CHARG(fichier.is_open())
+
+    int nbPlayer;
+
+    fichier >> nbPlayer;
+
+    fichier.ignore(1, '\n');
+
+    for (int i=0;i<nbPlayer;i++)
+    {
+        try{
+            players.push_back(new Player(fichier, modeles));
+        }
+        catch (const out_of_range& e)
+        {
+            cerr << "for the " << i << "th player" << endl;
+            fichier.close();
+            throw e;
+        }
+    }
+    fichier.close();
 }
 
 //initialisation de allegro

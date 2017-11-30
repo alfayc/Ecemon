@@ -35,12 +35,23 @@ class ModeleCreature : public ModeleCarte
 
     protected:
         int m_HP;
-        Move m_Moves[MAXMOVES];
+        Move m_Moves[MAXMOVES]; //c'est le seul endroit qui utilisera ces moves (à priori) il n'y a donc pas besoin de pointeur
 
     public:
         ModeleCreature();       ///LES CONSTRUCTEURS DE TOUTES LES CARTES RESTENT À FAIRE
         ModeleCreature(int a);  //pour instacier une carte.
+        ModeleCreature(int cardNum, std::istream& fichier);
         virtual ~ModeleCreature();
+
+        /* écrit la carte dans un fichier. Ne servira à priori jamais */
+        virtual void Write_file(std::ostream& fichier);
+
+        /* lit la carte dans un fichier
+        ON ASSUME QUE LE NUMÉRO DE LA CARTE A DÉJÀ ÉTÉ LU!!!*/
+        virtual void Read_file(std::istream& fichier);
+
+        //renvoie le type de carte
+        virtual CardType GetCardType() { return CREATURE; }
 
         //accesseurs
         int GetHP() { return m_HP; }
