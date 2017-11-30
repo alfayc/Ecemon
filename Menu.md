@@ -25,4 +25,6 @@ cette fonction sera appellée le nombre de cartes dans un deck fois.
       - () lancemet de la partie quand les deux joueurs ont choisi
 - Charger partie
   - Retours au menu principal
-  - 
+
+
+#####N'oubliez pas de destroy_bitmap à la fin des fonctions les bitmaps pour lesuqelles vous avez create_bitmap!!
