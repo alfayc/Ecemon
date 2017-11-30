@@ -40,14 +40,14 @@ Player::Player(map<int, ModeleCarte *> modeles)
     }
 
 ///                     BAAAAAAAAAAAAAAAAAAAAAAAAAADDDDDDD
-    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
-    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
-    m_Deck.push(new Energie(*dynamic_cast<ModeleEnergie *>(modeles[2])));
-    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
-    m_Deck.push(new Special(*dynamic_cast<ModeleSpecial *>(modeles[1])));
-    m_Deck.push(new Special(*dynamic_cast<ModeleSpecial *>(modeles[1])));
-    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
-    m_Deck.push(new Creature(*dynamic_cast<ModeleCreature *>(modeles[0])));
+    m_Deck.push(new Creature(*(dynamic_cast<ModeleCreature *>(modeles[0]))));
+    m_Deck.push(new Creature(*(dynamic_cast<ModeleCreature *>(modeles[0]))));
+    m_Deck.push(new Energie(*(dynamic_cast<ModeleEnergie *>(modeles[2]))));
+    m_Deck.push(new Creature(*(dynamic_cast<ModeleCreature *>(modeles[0]))));
+    m_Deck.push(new Special(*(dynamic_cast<ModeleSpecial *>(modeles[1]))));
+    m_Deck.push(new Special(*(dynamic_cast<ModeleSpecial *>(modeles[1]))));
+    m_Deck.push(new Creature(*(dynamic_cast<ModeleCreature *>(modeles[0]))));
+    m_Deck.push(new Creature(*(dynamic_cast<ModeleCreature *>(modeles[0]))));
 
 
     for (int i=0;i<NBDOMAINE;i++)

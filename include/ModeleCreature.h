@@ -39,7 +39,6 @@ class ModeleCreature : public ModeleCarte
 
     public:
         ModeleCreature();       ///LES CONSTRUCTEURS DE TOUTES LES CARTES RESTENT À FAIRE
-        ModeleCreature(int a);  //pour instacier une carte.
         ModeleCreature(int cardNum, std::istream& fichier);
         virtual ~ModeleCreature();
 

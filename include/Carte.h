@@ -22,6 +22,8 @@ class Carte
 
         /* renvoie la face de la carte*/
         virtual BITMAP *GetCardFront() = 0;
+        virtual void Detail(BITMAP *fond, PlayerInput& p_input, const Sprites& sprites);
+
 
         virtual ModeleCarte& GetModele() = 0;
 

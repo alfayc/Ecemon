@@ -128,6 +128,17 @@ struct Domaines{
 
 #define XTEXT 37
 
+//pour la fenetre de déscription d'une carte, dans Carte.cpp
+#define XFENETRE 105
+#define YFENETRE 140
+#define WFENETRE 460
+#define HFENETRE 620
+
+#define XBRETOUR 390
+#define YBRETOUR 650
+#define WBRETOUR 150
+#define HBRETOUR 100
+
 
 ///COLORS
 // des couleurs
@@ -147,7 +158,7 @@ struct Domaines{
 //#define COL_UI_FOND makecol(1,87,155)
 #define COL_UI_ACC makecol(79,195,247)  //un joli bleu clair (je crois)
 #define COL_SAND makecol(194,132,80)
-//#define COL_BRIDGE makecol(122,61,0)
+#define COL_BRIDGE makecol(122,61,0)
 //#define COL_GRASS makecol(110,130,51)
 //#define COL_WATER makecol(48,140,187)
 #define COL_MOUNTAIN makecol(83,83,83)
