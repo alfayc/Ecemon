@@ -3,7 +3,8 @@
 
 using namespace std;
 
-ModeleCarte::ModeleCarte()
+ModeleCarte::ModeleCarte(int _CardNum)
+    :m_CardNum(_CardNum)
 {
     //ctor
 }
@@ -14,15 +15,16 @@ ModeleCarte::~ModeleCarte()
 }
 
 // écrit la carte dans un fichier
-void ModeleCarte::Write_file(ofstream& fichier)
+void ModeleCarte::Write_file(ostream& fichier)
 {
-    fichier << endl << m_CardNum << endl;
+    fichier << endl << GetCardType() << endl;
+    fichier << m_CardNum << endl;
     fichier << m_Nom << endl;
     fichier << m_Description << endl;
 }
 
 // lit la carte dans un fichier
-void ModeleCarte::Read_file(ifstream& fichier)
+void ModeleCarte::Read_file(istream& fichier)
 {
     fichier.ignore(1, '\n');
 

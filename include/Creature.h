@@ -33,11 +33,11 @@ class Creature : public Carte
         virtual ~Creature();
 
         //renvoie le type de carte
-        virtual CardType GetCardType();
+        virtual CardType GetCardType() { return CREATURE; }
         //renvoie la face de la carte
         virtual BITMAP *GetCardFront();
 
-        virtual int GetCardNum() { return m_Modele.GetCardNum(); }
+        ModeleCarte& GetModele() { return m_Modele; }
 
         /* fait attaquer à la fin du tour */
         virtual void SetAttack(int who, int _move);
@@ -45,6 +45,7 @@ class Creature : public Carte
         virtual void EndTurn(Player& ally, Player& enemy);
 
         //accesseurs
+        virtual void Reset();
         int GetHP() { return m_HP; }
         int GetAD(int num) { return m_Moves[num].GetDamage(); }
         bool IsFrozen() { return (bool) m_Frozen; }

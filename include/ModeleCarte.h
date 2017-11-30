@@ -17,15 +17,18 @@ class ModeleCarte
         BITMAP *m_CardFront;
 
     public:
-        ModeleCarte();
+        ModeleCarte(int _CardNum);
         virtual ~ModeleCarte();
 
-        /* écrit la carte dans un fichier */
-        virtual void Write_file(std::ofstream& fichier);
+        /* écrit la carte dans un fichier. Ne servira à priori jamais */
+        virtual void Write_file(std::ostream& fichier);
 
         /* lit la carte dans un fichier
         ON ASSUME QUE LE NUMÉRO DE LA CARTE A DÉJÀ ÉTÉ LU!!!*/
-        virtual void Read_file(std::ifstream& fichier);
+        virtual void Read_file(std::istream& fichier);
+
+        /* renvoie le type de carte (creature, energie, special) */
+        virtual CardType GetCardType() = 0;
 
 
         int GetCardNum() { return m_CardNum; }

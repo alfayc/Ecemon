@@ -1,5 +1,5 @@
 #include "ModeleCreature.h"
-//declaration de la classe Move dans ModeleCreature.h
+///declaration de la classe Move dans ModeleCreature.h
 
 #include "Player.h"
 

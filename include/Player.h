@@ -28,7 +28,10 @@ class Player
     protected:
 
     public:
+        [[deprecated]]
         Player();
+        Player(std::map<int, ModeleCarte *> modeles);
+        Player(std::istream& fichier, std::map<int, ModeleCarte *> modeles);
         virtual ~Player();
 
         /* dessine un demi écran pour le joueur en cours.
@@ -47,15 +50,23 @@ class Player
         /* Pour recevoir des degats */
         void TakeDamage(int quant);
 
+        /* prend une carte du deck/collection et la met dans l'enjeu */
+        ///void PlaceEnjeu();
+
+        /* Sauvegarde le joueur (PAS LA PARTIE) */
+        void WriteFile(std::ostream& fichier);
+
+        /* Charge un joueur (PAS LA PARTIE) */
+        void ReadFile(std::istream& fichier, std::map<int, ModeleCarte *> modeles);
+
+        ///void CreateNew(map<int, ModeleCarte *> modeles);
+
         //accesseurs "utiles"/"necessaires"
         /* revoie true si le joueur a perdu */
         bool GetDead();
 
         /* remet à MaxHP l'HP du joueur */
-        void ResetHP();
-
-        /* prend une carte du deck/collection et la met dans l'enjeu */
-        //void PlaceEnjeu();
+        void Reset();
 
         //getters/setters
         std::string GetNom() { return m_Nom; }

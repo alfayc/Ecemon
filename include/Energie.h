@@ -19,15 +19,17 @@ class Energie : public Carte
         Energie(ModeleEnergie& _Modele);
         virtual ~Energie();
 
-        virtual int GetCardNum() { return m_Modele.GetCardNum(); }
-
         //renvoie le type de carte
-        virtual CardType GetCardType();
+        virtual CardType GetCardType() { return ENERGIE; }
         //renvoie la face de la carte
         virtual BITMAP *GetCardFront();
 
+        ModeleCarte& GetModele() { return m_Modele; }
+
         // ajoute l'énergie de cette carte à un ensemble de domaines
         void Use(Domaines& where);
+
+        virtual void Reset();
 };
 
 #endif // ENERGIE_H

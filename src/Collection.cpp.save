@@ -57,6 +57,8 @@ void Collection::ReadFile(std::istream& fichier, std::map<int, ModeleCarte *> mo
         catch (const out_of_range& e)
         {
             cerr << endl << "THIS FILE ASKS FOR A CARD THAT DOES NOT EXIST" << endl;
+            cerr.flush();
+
             throw e;
         }
 
@@ -75,16 +77,6 @@ void Collection::ReadFile(std::istream& fichier, std::map<int, ModeleCarte *> mo
         break;
         }
     }
-
-    //so that reading the next player doesn't create problems with getline
-    fichier.ignore(1, '\n');
 }
 
-void Collection::Reset()
-{
-    for (const auto& elem : m_Cartes)
-    {
-        elem->Reset();
-    }
-}
 
