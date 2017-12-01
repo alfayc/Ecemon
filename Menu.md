@@ -13,11 +13,8 @@ RENVOIE un entier/enum du choix du joueur.
   - ()quitte le jeu
 - Nouvelle partie
   - Retours au menu principal
-  - Nouveau joueur
-    - [ ] choix du joueur (mario etc) ou bien ()demande d'entrer le nom du joueur dans la console
-    - [ ] choix des cartes
   - Choix des deux joueurs (prévoir un très grand nombre de joueurs, donc avec plusieures pages)
-    - retours au choix des joueurs
+    - retours à la nouvelle partie
     - choix des cartes à mettre dans le deck depuis la collection (prevoir plusieurs pages de cartes) une carte à la fois. 
 cette fonction sera appellée le nombre de cartes dans un deck fois.
       - () lancemet de la partie quand les deux joueurs ont choisi
@@ -25,6 +22,11 @@ cette fonction sera appellée le nombre de cartes dans un deck fois.
       - () lancemet de la partie quand les deux joueurs ont choisi
 - Charger partie
   - Retours au menu principal
+- Nouveau Joueur
+  - [ ] choix du joueur (mario etc) ou bien ()demande d'entrer le nom du joueur dans la console
+  - [ ] choix des cartes
+- Magasin
+  - pouvoir acheter des cartes et les ajouter à la collection
 
 
 ##### N'oubliez pas de destroy_bitmap à la fin des fonctions les bitmaps pour lesuqelles vous avez create_bitmap!!
