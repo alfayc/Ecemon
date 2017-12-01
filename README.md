@@ -10,10 +10,10 @@ TODO:
     * Créer/assembler une collection
     * Créer un deck
 - [ ] Message de victoire
-- [ ] Chargement/sauvegarde fichier (cartes, joueur, partie)
+- [x] Chargement/sauvegarde fichier (cartes, joueur, partie)
     * Cartes
     * Joueur
-- [ ] fonction pour la description d'une carte
+- [x] fonction pour la description d'une carte
  
 Dans le CDC de base:
 
@@ -23,7 +23,7 @@ Dans le CDC de base:
 - [ ] 6 modèles de cartes spéciales permettant d'altérer les mécanismes par défaut du jeu
 - [ ] Nombre indéfini de joueurs, pouvoir ajouter des joueurs...
 - [ ] Pouvoir acheter des cartes pour faire évoluer les collections des joueurs
-- [ ] Les données des joueurs et leur collections sont sauvées sur fichier (on les retrouve)
+- [x] Les données des joueurs et leur collections sont sauvées sur fichier (on les retrouve)
 - [ ] Organiser des matchs entre joueurs au choix
 - [ ] Phase de sélection des decks (à partir des collections de chacun)
 - [ ] Battre le deck. Tirage de l'enjeu.
