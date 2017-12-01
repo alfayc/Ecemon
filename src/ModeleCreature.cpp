@@ -48,7 +48,7 @@ void ModeleCreature::Write_file(ostream& fichier)
 
     for (int i=0;i<MAXMOVES;i++)
     {
-        fichier << m_Moves[i].GetDamage() << endl;
+        m_Moves[i].Write_file(fichier);
     }
 }
 
@@ -67,9 +67,7 @@ void ModeleCreature::Read_file(istream& fichier)
 
     for (int i=0;i<nbMoves;i++)
     {
-        int dmg;
-        fichier >> dmg;
-        m_Moves[i] = Move(dmg);
+        m_Moves[i] = Move(fichier);
     }
 
     for (int i=nbMoves;i<MAXMOVES;i++) //cette boucle n'aura généralement pas lieu

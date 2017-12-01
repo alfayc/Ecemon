@@ -1,4 +1,3 @@
-//Don't forget to include what's necessary
 #include "Creature.h"
 
 #include "Player.h"
@@ -10,7 +9,7 @@ Creature::Creature(ModeleCreature& _Modele)
 {
     for (int i=0;i<MAXMOVES;i++)
     {
-        m_Moves[i] = m_Modele.GetMove(i); //m_Moves est un tableau de Moves (PAS POINTEUR)
+        m_Moves[i] = _Modele.GetMove(i); //l'operateur = est overloadé proprement
     }
 }
 
@@ -79,6 +78,12 @@ void Creature::EndTurn(Player& ally, Player& enemy)
 void Creature::Reset()
 {
     m_HP = m_Modele.GetHP();
+
+    for (int i=0;i<MAXMOVES;i++)
+    {
+        m_Moves[i] = m_Modele.GetMove(i);
+    }
+
     m_Attack = false;
     m_Cible = 0;
     m_AttackMove = 0;

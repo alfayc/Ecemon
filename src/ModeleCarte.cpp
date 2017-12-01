@@ -1,4 +1,3 @@
-//Don't forget to include what's necessary
 #include "ModeleCarte.h"
 
 using namespace std;

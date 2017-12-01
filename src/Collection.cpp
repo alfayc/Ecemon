@@ -15,6 +15,16 @@ Collection::~Collection()
     }
 }
 
+/// A REFAIRE
+void Collection::CreateDeck(queue<Carte *>& deck)
+{
+    while (!deck.empty())
+        deck.pop();
+
+    for (const auto& elem : m_Cartes)
+        deck.push(elem);
+}
+
 void Collection::WriteFile(std::ostream& fichier)
 {
     fichier << endl << m_Cartes.size() << endl;

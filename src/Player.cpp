@@ -4,7 +4,7 @@ using namespace std;
 
 //constructeur par défaud. ne pas l'utiliser
 Player::Player()
-    :m_HP(0), m_MaxHP(0)
+    :m_Nom("Pas Moi"), m_HP(0), m_MaxHP(0)
 {
     m_Enjeu = nullptr;
 
@@ -25,7 +25,7 @@ Player::Player()
 }
 
 Player::Player(map<int, ModeleCarte *> modeles)
-    :m_HP(20), m_MaxHP(20)
+    :m_Nom("Moi"), m_HP(20), m_MaxHP(20)
 {
     m_Enjeu = nullptr;
 
@@ -62,6 +62,8 @@ Player::Player(istream& fichier, map<int, ModeleCarte *> modeles)
 
     m_HP = m_MaxHP;
 
+    m_Enjeu = nullptr;
+
     for (int i=0;i<MAXSPECIAL;i++)
     {
         m_Special[i] = nullptr;
@@ -90,6 +92,7 @@ void Player::WriteFile(ostream& fichier)
     fichier << m_MaxHP << endl;
 
     m_Collection.WriteFile(fichier);
+    fichier << endl;
 }
 
 void Player::ReadFile(istream& fichier, map<int, ModeleCarte *> modeles)
@@ -107,6 +110,8 @@ void Player::ReadFile(istream& fichier, map<int, ModeleCarte *> modeles)
         cerr << "for player " << m_Nom << endl;
         throw e;
     }
+
+    fichier.ignore(1, '\n');
 }
 
 

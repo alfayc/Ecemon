@@ -34,6 +34,8 @@ class Player
         Player(std::istream& fichier, std::map<int, ModeleCarte *> modeles);
         virtual ~Player();
 
+        void NewGame() { m_Collection.CreateDeck(m_Deck); }
+
         /* dessine un demi écran pour le joueur en cours.
         turn est vraie si c'est au tour de ce joueur */
         void Draw(BITMAP *dest, bool turn, const Sprites& sprites, const PlayerInput& p_input); //affiche les cartes sur la bitmap en paramètre
@@ -59,6 +61,7 @@ class Player
         /* Charge un joueur (PAS LA PARTIE) */
         void ReadFile(std::istream& fichier, std::map<int, ModeleCarte *> modeles);
 
+        //entreer les cartes depuis le joueur
         ///void CreateNew(map<int, ModeleCarte *> modeles);
 
         //accesseurs "utiles"/"necessaires"

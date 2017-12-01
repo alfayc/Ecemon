@@ -15,18 +15,33 @@ class Move
 
     protected:
         int m_Damage;
+        Domaines m_Consomation;
 
     public:
         Move();
-        Move(int _Damage);
+        Move(std::istream& fichier);
+        Move(int _Damage, Domaines& consomation);
+        Move(const Move& other);
         virtual ~Move();
+        Move& operator=(const Move& other);
+
 
         /* who = -1 to attack the enemy player himself
-        pas nécéssaire de passer l'allié en paramètre mais si jamais on décide de faire une classe fille vampirique...*/
+        pas nécéssaire de passer l'allié en paramètre mais si jamais on décide de faire une classe fille vampirique..., pour la consomation d'energie aussi */
         virtual void Attack(Player& ally, Player& enemy, int who);
 
+        /* écrit la carte dans un fichier. Ne servira à priori jamais */
+        virtual void Write_file(std::ostream& fichier);
+
+        /* lit la carte dans un fichier
+        ON ASSUME QUE LE NUMÉRO DE LA CARTE A DÉJÀ ÉTÉ LU!!!*/
+        virtual void Read_file(std::istream& fichier);
+
         //accesseur
-        int GetDamage() { return m_Damage; }
+        int GetDamage() const { return m_Damage; }
+        void SetDamage(int dmg) { m_Damage = dmg; }
+        Domaines GetConsomation() const { return m_Consomation; }
+        void SetConsomation(Domaines conso);
 };
 
 class ModeleCreature : public ModeleCarte

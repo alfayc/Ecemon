@@ -26,17 +26,18 @@ int main()
     Player *players[2];
     bool endGame = false;
 
-    load_modeles(modeles);
     load_sprites(sprites);
+    load_modeles(modeles);
+    load_players(playerList, modeles);
 
     buffer = create_bitmap(XSCREEN, YSCREEN);
-
-    playerList.push_back(new Player(modeles));
-    playerList.push_back(new Player(modeles));
 
     //préparation à la partie
     players[0] = playerList.at(0);
     players[1] = playerList.at(1);
+
+    players[0]->NewGame();
+    players[1]->NewGame();
 
     p_input.dragging = false;
     p_input.prevClick = false;
@@ -63,15 +64,14 @@ int main()
             {
                 endGame = true;
                 cout << endl << "partie terminée!!" << endl;
+
+                if (players[0]->GetDead() && players[1]->GetDead())
+                   cout << "\x1B[36m FELICITATIONS VOUS AVEZ RÉUSSI À FAIRE UN MATCH NUL!!!!!! \x1B[0m" << endl;
+                else
+                    cout << "Le joueur" << (players[1]->GetDead()?"1":"2") << "a gagné!!" << endl;
                 break;
             }
         }
-    }
-
-
-    for (const auto& elem : modeles)
-    {
-        delete(elem.second);
     }
 
     ofstream pfichier(FPINFO, ios::out | ios::trunc);
@@ -85,6 +85,11 @@ int main()
     }
 
     pfichier.close();
+
+    for (const auto& elem : modeles)
+    {
+        delete(elem.second);
+    }
 
     return 0;
 }

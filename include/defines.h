@@ -181,8 +181,8 @@ struct Domaines{
 #define FCARDB "Res\\Card_Back.bmp"             //70x100
 #define FCARDT "Res\\Card_Template.bmp"         //70x100
 
-#define FMODELES "Res\\Modeles.txt"              //contient les infos des cartes
-#define FPINFO "Res\\P_info.txt"                 //contient l'info des joueurs (les cartes, hp etc)
+#define FMODELES "Saves\\Modeles.txt"           //contient les infos des cartes
+#define FPINFO "Saves\\P_info.txt"              //contient l'info des joueurs (les cartes, hp etc)
 
 #else
 
@@ -192,8 +192,8 @@ struct Domaines{
 #define FCARDB "Res/Card_Back.bmp"              //70x100
 #define FCARDT "Res/Card_Template.bmp"          //70x100
 
-#define FMODELES "Res/Modeles.txt"              //contient les infos des cartes
-#define FPINFO "Res/P_info.txt"                 //contient l'info des joueurs (les cartes, hp etc)
+#define FMODELES "Saves/Modeles.txt"            //contient les infos des cartes
+#define FPINFO "Saves/P_info.txt"               //contient l'info des joueurs (les cartes, hp etc)
 
 #endif // _WINDOWS
 

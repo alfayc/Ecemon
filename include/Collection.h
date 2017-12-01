@@ -18,7 +18,7 @@ class Collection
         virtual ~Collection();
 
         //void Fill(std::map<int, ModeleCarte *> cardList); //pour remplir depuis l'utilisateur
-        //void CreateDeck(std::queue<Carte *>& deck); //pour créer un deck depuis la collection
+        void CreateDeck(std::queue<Carte *>& deck); //pour créer un deck depuis la collection
         //void AddCard(Carte *ajout);
         //Carte *PopCard(int num); //enlevè la numième carte et la renvoie. pour l'enjeu
 
