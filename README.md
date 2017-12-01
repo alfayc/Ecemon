@@ -1,8 +1,6 @@
 # Ecemon
 Ne pas retelecharger trop souvent le dossier RES (ce qui pese le plus)
 
-reset des cartes créature -> depuis les modeles
-
 TODO:
 
 - [x] Finir la boucle de jeu
